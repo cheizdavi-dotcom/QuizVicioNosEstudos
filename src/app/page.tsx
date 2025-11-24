@@ -82,7 +82,7 @@ export default function Home() {
                  <BrainCircuit className="w-12 h-12 text-primary" />
               </div>
               <CardTitle className="text-3xl md:text-4xl font-extrabold">Descubra Seu Perfil de Estudante</CardTitle>
-              <CardDescription className="text-muted-foreground text-lg pt-4">
+              <CardDescription className="text-muted-foreground text-lg pt-4 leading-relaxed">
                 90% dos estudantes travam o foco por causa de padrões ocultos no cérebro — descubra em qual deles você caiu em menos de 60 segundos.
               </CardDescription>
             </CardHeader>
