@@ -5,6 +5,7 @@ import { quizQuestions } from '@/lib/quiz-data';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
+import { cn } from '@/lib/utils';
 
 interface QuizProps {
   onComplete: (answerIndexes: number[]) => void;
@@ -14,33 +15,40 @@ export default function Quiz({ onComplete }: QuizProps) {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answerIndexes, setAnswerIndexes] = useState<number[]>([]);
   const [progress, setProgress] = useState(0);
-  const [isAnimating, setIsAnimating] = useState(false);
+  const [isAnimatingOut, setIsAnimatingOut] = useState(false);
+  const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
 
   useEffect(() => {
     setProgress(((currentQuestionIndex) / quizQuestions.length) * 100);
   }, [currentQuestionIndex]);
 
   const handleAnswer = (answerIndex: number) => {
-    if (isAnimating) return;
+    if (isAnimatingOut) return;
 
+    setSelectedAnswer(answerIndex);
     const newAnswerIndexes = [...answerIndexes, answerIndex];
     setAnswerIndexes(newAnswerIndexes);
-    setIsAnimating(true);
+    setIsAnimatingOut(true);
 
+    // Feedback visual de 150ms
     setTimeout(() => {
-        if (currentQuestionIndex < quizQuestions.length - 1) {
-            setCurrentQuestionIndex(currentQuestionIndex + 1);
-            setIsAnimating(false);
-          } else {
-            onComplete(newAnswerIndexes);
-          }
-    }, 300)
+      if (currentQuestionIndex < quizQuestions.length - 1) {
+        setCurrentQuestionIndex(currentQuestionIndex + 1);
+        setSelectedAnswer(null); // Limpa a seleção
+        setIsAnimatingOut(false);
+      } else {
+        onComplete(newAnswerIndexes);
+      }
+    }, 150);
   };
 
   const currentQuestion = quizQuestions[currentQuestionIndex];
 
   return (
-    <Card className="w-full max-w-3xl animate-fade-in shadow-2xl shadow-primary/10">
+    <Card className={cn(
+        "w-full max-w-3xl shadow-2xl shadow-primary/10 transition-opacity duration-300",
+        isAnimatingOut ? "opacity-0" : "opacity-100"
+    )}>
       <CardHeader className="p-6 md:p-8">
         <Progress value={progress} className="w-full h-2 mb-6" />
         <p className="text-sm font-medium text-primary mb-2">
@@ -57,8 +65,14 @@ export default function Quiz({ onComplete }: QuizProps) {
               key={index}
               variant="outline"
               size="lg"
-              className="text-left justify-start h-auto py-4 whitespace-normal text-base transition-all duration-300 hover:bg-accent hover:text-accent-foreground hover:border-primary focus:bg-accent focus:text-accent-foreground focus:border-primary"
+              className={cn(
+                "text-left justify-start h-auto py-4 whitespace-normal text-base transition-colors duration-150",
+                selectedAnswer === index
+                  ? 'bg-primary text-primary-foreground'
+                  : 'hover:bg-accent hover:text-accent-foreground'
+              )}
               onClick={() => handleAnswer(index)}
+              disabled={isAnimatingOut}
             >
               {option}
             </Button>
