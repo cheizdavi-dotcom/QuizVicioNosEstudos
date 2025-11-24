@@ -7,12 +7,12 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 
 interface QuizProps {
-  onComplete: (answers: string[]) => void;
+  onComplete: (answerIndexes: number[]) => void;
 }
 
 export default function Quiz({ onComplete }: QuizProps) {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [answers, setAnswers] = useState<string[]>([]);
+  const [answerIndexes, setAnswerIndexes] = useState<number[]>([]);
   const [progress, setProgress] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
 
@@ -20,11 +20,11 @@ export default function Quiz({ onComplete }: QuizProps) {
     setProgress(((currentQuestionIndex) / quizQuestions.length) * 100);
   }, [currentQuestionIndex]);
 
-  const handleAnswer = (answer: string) => {
+  const handleAnswer = (answerIndex: number) => {
     if (isAnimating) return;
 
-    const newAnswers = [...answers, answer];
-    setAnswers(newAnswers);
+    const newAnswerIndexes = [...answerIndexes, answerIndex];
+    setAnswerIndexes(newAnswerIndexes);
     setIsAnimating(true);
 
     setTimeout(() => {
@@ -32,7 +32,7 @@ export default function Quiz({ onComplete }: QuizProps) {
             setCurrentQuestionIndex(currentQuestionIndex + 1);
             setIsAnimating(false);
           } else {
-            onComplete(newAnswers);
+            onComplete(newAnswerIndexes);
           }
     }, 300)
   };
@@ -58,7 +58,7 @@ export default function Quiz({ onComplete }: QuizProps) {
               variant="outline"
               size="lg"
               className="text-left justify-start h-auto py-4 whitespace-normal text-base transition-all duration-300 hover:bg-accent hover:text-accent-foreground hover:border-primary focus:bg-accent focus:text-accent-foreground focus:border-primary"
-              onClick={() => handleAnswer(option)}
+              onClick={() => handleAnswer(index)}
             >
               {option}
             </Button>

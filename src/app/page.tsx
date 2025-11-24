@@ -1,42 +1,66 @@
 'use client';
 
 import { useState } from 'react';
-import { generatePersonalizedQuizResult, PersonalizedQuizResultOutput } from '@/ai/flows/generate-personalized-quiz-result';
 import Quiz from '@/components/quiz';
 import QuizResult from '@/components/quiz-result';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { BrainCircuit, Loader2 } from 'lucide-react';
-import { useToast } from '@/hooks/use-toast';
+import { BrainCircuit } from 'lucide-react';
+
+export type ResultProfile = {
+  title: string;
+  diagnosis: string;
+  cta: string;
+};
+
+const resultProfiles: Record<string, ResultProfile> = {
+  "Procrastinador Crônico": {
+    title: "O Procrastinador Crônico",
+    diagnosis: "Você caiu no ciclo mais comum entre estudantes: quer estudar, se enrola, deixa pra depois e sente culpa. Seu cérebro só está condicionado a buscar alívio rápido, não foco. O bom é que esse é o perfil que mais destrava com o Método Viciado em Estudar, porque ele ativa gatilhos neurológicos que fazem o foco surgir quase automaticamente.",
+    cta: "Destravar meu foco agora",
+  },
+  "Estudante Inconstante": {
+    title: "O Estudante Inconstante",
+    diagnosis: "Você estuda… mas não mantém o ritmo. Não é falta de esforço — é falta de método. Seu cérebro tenta, mas não encontrou um fluxo simples que torne estudar leve e automático. O Método Viciado em Estudar foi criado exatamente para transformar pessoas como você em máquinas de constância.",
+    cta: "Entrar no modo constante",
+  },
+  "Focado, porém Bloqueado": {
+    title: "Focado, mas Bloqueado",
+    diagnosis: "Você sabe estudar, mas algo emocional te trava: cansaço, ansiedade, autocobrança ou frustração. Você está muito perto de virar a chave — falta apenas um ajuste mental para manter o foco ligado todos os dias. O Método Viciado em Estudar dá exatamente essa estabilidade.",
+    cta: "Ativar meu potencial máximo",
+  },
+  "Quase Viciado em Estudar": {
+    title: "Quase Viciado em Estudar",
+    diagnosis: "Você já está próximo do seu auge. Seu cérebro responde bem ao estudo, falta só uma estrutura que mantenha seu ritmo sempre alto, sem oscilações. O Método Viciado em Estudar é ideal para elevar alguém como você ao estado de foco automático.",
+    cta: "Virar 100% Viciado em Estudar",
+  },
+};
 
 export default function Home() {
-  const [quizState, setQuizState] = useState<'idle' | 'in-progress' | 'loading' | 'completed'>('idle');
-  const [answers, setAnswers] = useState<string[]>([]);
-  const [result, setResult] = useState<PersonalizedQuizResultOutput | null>(null);
-  const { toast } = useToast();
+  const [quizState, setQuizState] = useState<'idle' | 'in-progress' | 'completed'>('idle');
+  const [result, setResult] = useState<ResultProfile | null>(null);
 
   const handleStartQuiz = () => {
-    setAnswers([]);
     setResult(null);
     setQuizState('in-progress');
   };
 
-  const handleQuizCompletion = async (finalAnswers: string[]) => {
-    setAnswers(finalAnswers);
-    setQuizState('loading');
-    try {
-      const quizResult = await generatePersonalizedQuizResult({ answers: finalAnswers });
-      setResult(quizResult);
-      setQuizState('completed');
-    } catch (error) {
-      console.error("Error generating quiz result:", error);
-      toast({
-        title: "Erro ao gerar resultado",
-        description: "Houve um problema ao analisar suas respostas. Por favor, tente novamente.",
-        variant: "destructive",
-      });
-      setQuizState('idle');
+  const handleQuizCompletion = (answerIndexes: number[]) => {
+    const totalScore = answerIndexes.reduce((sum, index) => sum + (index + 1), 0);
+    
+    let profileKey: string;
+    if (totalScore >= 5 && totalScore <= 9) {
+      profileKey = "Procrastinador Crônico";
+    } else if (totalScore >= 10 && totalScore <= 13) {
+      profileKey = "Estudante Inconstante";
+    } else if (totalScore >= 14 && totalScore <= 17) {
+      profileKey = "Focado, porém Bloqueado";
+    } else { // 18-20
+      profileKey = "Quase Viciado em Estudar";
     }
+
+    setResult(resultProfiles[profileKey]);
+    setQuizState('completed');
   };
 
   const handleRestart = () => {
@@ -47,14 +71,6 @@ export default function Home() {
     switch (quizState) {
       case 'in-progress':
         return <Quiz onComplete={handleQuizCompletion} />;
-      case 'loading':
-        return (
-          <div className="flex flex-col items-center justify-center text-center p-8 min-h-[30rem]">
-            <Loader2 className="w-16 h-16 animate-spin text-primary" />
-            <p className="text-primary mt-6 text-xl font-semibold">Analisando suas respostas...</p>
-            <p className="text-muted-foreground mt-2">Estamos gerando seu diagnóstico personalizado.</p>
-          </div>
-        );
       case 'completed':
         return result && <QuizResult result={result} onRestart={handleRestart} />;
       case 'idle':
