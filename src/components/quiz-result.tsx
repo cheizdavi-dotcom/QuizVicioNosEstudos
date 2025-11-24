@@ -27,13 +27,19 @@ export default function QuizResult({ result, onRestart }: QuizResultProps) {
          🔥 Seu Perfil: "{title}"
         </CardTitle>
       </CardHeader>
-      <CardContent className="px-4 sm:px-6 md:px-8 space-y-4 sm:space-y-6">
+      <CardContent className="px-4 sm:px-6 md:px-8 space-y-6">
         <div className="p-4 sm:p-6 bg-secondary/30 rounded-lg border border-secondary">
             <p className="italic text-muted-foreground leading-relaxed">"{stories[title]}"</p>
         </div>
-        <div className="p-4 sm:p-6 bg-secondary/50 rounded-lg border">
-            <p className="font-semibold text-foreground mb-2">Diagnóstico Detalhado:</p>
-            <p className="text-muted-foreground">{diagnosis}</p>
+        <div className="p-4 sm:p-6 bg-secondary/50 rounded-lg border space-y-4">
+            <div>
+              <p className="font-semibold text-foreground mb-2">Diagnóstico:</p>
+              <p className="text-muted-foreground whitespace-pre-line">{diagnosis}</p>
+            </div>
+             <div>
+              <p className="font-semibold text-foreground mb-2">A Única Crença:</p>
+              <p className="text-muted-foreground">Ativar os gatilhos neurológicos de foco é a chave para estudar com disciplina — e a melhor forma de fazer isso é com o Método Viciado em Estudar.</p>
+            </div>
         </div>
       </CardContent>
       <CardFooter className="flex-col gap-4 p-6 md:p-8">

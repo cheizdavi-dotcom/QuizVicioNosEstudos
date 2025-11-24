@@ -6,6 +6,7 @@ import QuizResult from '@/components/quiz-result';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { BrainCircuit } from 'lucide-react';
+import AnalyzingScreen from '@/components/analyzing-screen';
 
 export type ResultProfile = {
   title: string;
@@ -16,28 +17,28 @@ export type ResultProfile = {
 const resultProfiles: Record<string, ResultProfile> = {
   "Procrastinador Crônico": {
     title: "O Procrastinador Crônico",
-    diagnosis: "Você caiu no ciclo mais comum entre estudantes: quer estudar, se enrola, deixa pra depois e sente culpa. Seu cérebro só está condicionado a buscar alívio rápido, não foco. O bom é que esse é o perfil que mais destrava com o Método Viciado em Estudar, porque ele ativa gatilhos neurológicos que fazem o foco surgir quase automaticamente.",
+    diagnosis: "Você estuda… mas não mantém o ritmo. Não é falta de esforço — é falta de método.\nSeu cérebro está condicionado a buscar alívio rápido, não foco profundo.\nÉ por isso que técnicas comuns não funcionaram para você.\nAntes de estudar, você precisa ativar os gatilhos neurológicos que desbloqueiam foco automático.\nQuando isso ativa, estudar deixa de ser pesado — vira natural.",
     cta: "Quero ativar meu foco em 7 minutos (Acesso Imediato)",
   },
   "Estudante Inconstante": {
     title: "O Estudante Inconstante",
-    diagnosis: "Você estuda… mas não mantém o ritmo. Não é falta de esforço — é falta de método. Seu cérebro tenta, mas ainda não encontrou um fluxo simples que torne estudar leve e automático. O Método Viciado em Estudar foi criado exatamente para transformar pessoas como você em máquinas de constância.",
+    diagnosis: "Você estuda… mas não mantém o ritmo. Não é falta de esforço — é falta de método.\nSeu cérebro está condicionado a buscar alívio rápido, não foco profundo.\nÉ por isso que técnicas comuns não funcionaram para você.\nAntes de estudar, você precisa ativar os gatilhos neurológicos que desbloqueiam foco automático.\nQuando isso ativa, estudar deixa de ser pesado — vira natural.",
     cta: "Quero ativar meu foco em 7 minutos (Acesso Imediato)",
   },
-  "Focado, porém Bloqueado": {
+  "Focado, mas Bloqueado": {
     title: "Focado, mas Bloqueado",
-    diagnosis: "Você sabe estudar, mas algo emocional te trava: cansaço, ansiedade, autocobrança ou frustração. Você está muito perto de virar a chave — falta apenas um ajuste mental para manter o foco ligado todos os dias. O Método Viciado em Estudar dá exatamente essa estabilidade.",
+    diagnosis: "Você estuda… mas não mantém o ritmo. Não é falta de esforço — é falta de método.\nSeu cérebro está condicionado a buscar alívio rápido, não foco profundo.\nÉ por isso que técnicas comuns não funcionaram para você.\nAntes de estudar, você precisa ativar os gatilhos neurológicos que desbloqueiam foco automático.\nQuando isso ativa, estudar deixa de ser pesado — vira natural.",
     cta: "Quero ativar meu foco em 7 minutos (Acesso Imediato)",
   },
   "Quase Viciado em Estudar": {
     title: "Quase Viciado em Estudar",
-    diagnosis: "Você já está próximo do seu auge. Seu cérebro responde bem ao estudo, falta só uma estrutura que mantenha seu ritmo sempre alto, sem oscilações. O Método Viciado em Estudar é ideal para elevar alguém como você ao estado de foco automático.",
+    diagnosis: "Você estuda… mas não mantém o ritmo. Não é falta de esforço — é falta de método.\nSeu cérebro está condicionado a buscar alívio rápido, não foco profundo.\nÉ por isso que técnicas comuns não funcionaram para você.\nAntes de estudar, você precisa ativar os gatiligos neurológicos que desbloqueiam foco automático.\nQuando isso ativa, estudar deixa de ser pesado — vira natural.",
     cta: "Quero ativar meu foco em 7 minutos (Acesso Imediato)",
   },
 };
 
 export default function Home() {
-  const [quizState, setQuizState] = useState<'idle' | 'in-progress' | 'completed'>('idle');
+  const [quizState, setQuizState] = useState<'idle' | 'in-progress' | 'analyzing' | 'completed'>('idle');
   const [result, setResult] = useState<ResultProfile | null>(null);
 
   const handleStartQuiz = () => {
@@ -54,13 +55,17 @@ export default function Home() {
     } else if (totalScore >= 10 && totalScore <= 13) {
       profileKey = "Estudante Inconstante";
     } else if (totalScore >= 14 && totalScore <= 17) {
-      profileKey = "Focado, porém Bloqueado";
+      profileKey = "Focado, mas Bloqueado";
     } else { // 18-20
       profileKey = "Quase Viciado em Estudar";
     }
 
     setResult(resultProfiles[profileKey]);
-    setQuizState('completed');
+    setQuizState('analyzing');
+
+    setTimeout(() => {
+        setQuizState('completed');
+    }, 2500);
   };
 
   const handleRestart = () => {
@@ -71,6 +76,8 @@ export default function Home() {
     switch (quizState) {
       case 'in-progress':
         return <Quiz onComplete={handleQuizCompletion} />;
+      case 'analyzing':
+        return <AnalyzingScreen />;
       case 'completed':
         return result && <QuizResult result={result} onRestart={handleRestart} />;
       case 'idle':
@@ -83,7 +90,7 @@ export default function Home() {
               </div>
               <CardTitle className="text-2xl sm:text-3xl md:text-4xl font-extrabold">Descubra Seu Perfil de Estudante</CardTitle>
               <CardDescription className="text-base sm:text-lg text-muted-foreground pt-4 leading-relaxed">
-                90% dos estudantes travam o foco por causa de padrões ocultos no cérebro — descubra em qual deles você caiu em menos de 60 segundos.
+                90% dos estudantes travam o foco por padrões ocultos no cérebro — descubra em qual deles você caiu em menos de 60 segundos.
               </CardDescription>
             </CardHeader>
             <CardContent className="p-6 sm:p-8 md:p-12 pt-0">

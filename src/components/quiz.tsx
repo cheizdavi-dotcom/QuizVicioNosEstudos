@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { quizQuestions } from '@/lib/quiz-data';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -17,29 +17,44 @@ export default function Quiz({ onComplete }: QuizProps) {
   const [progress, setProgress] = useState(0);
   const [isAnimatingOut, setIsAnimatingOut] = useState(false);
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
+  const [showContinue, setShowContinue] = useState(false);
+
+  const advanceTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     setProgress(((currentQuestionIndex) / quizQuestions.length) * 100);
   }, [currentQuestionIndex]);
 
+  const advanceToNext = (newAnswerIndexes: number[]) => {
+      if (currentQuestionIndex < quizQuestions.length - 1) {
+        setCurrentQuestionIndex(currentQuestionIndex + 1);
+        setSelectedAnswer(null);
+        setIsAnimatingOut(false);
+        setShowContinue(false);
+      } else {
+        onComplete(newAnswerIndexes);
+      }
+      if(advanceTimeoutRef.current) {
+        clearTimeout(advanceTimeoutRef.current);
+      }
+  };
+
   const handleAnswer = (answerIndex: number) => {
     if (selectedAnswer !== null) return;
 
     setSelectedAnswer(answerIndex);
+    const newAnswerIndexes = [...answerIndexes, answerIndex];
+    setAnswerIndexes(newAnswerIndexes);
     
-    setTimeout(() => {
-      const newAnswerIndexes = [...answerIndexes, answerIndex];
-      setAnswerIndexes(newAnswerIndexes);
-      setIsAnimatingOut(true);
+    // Fallback to show "Continue" button if auto-advance fails
+    advanceTimeoutRef.current = setTimeout(() => {
+        setShowContinue(true);
+    }, 2000);
 
+    setTimeout(() => {
+      setIsAnimatingOut(true);
       setTimeout(() => {
-        if (currentQuestionIndex < quizQuestions.length - 1) {
-          setCurrentQuestionIndex(currentQuestionIndex + 1);
-          setSelectedAnswer(null);
-          setIsAnimatingOut(false);
-        } else {
-          onComplete(newAnswerIndexes);
-        }
+        advanceToNext(newAnswerIndexes);
       }, 350); // duration of the out animation
     }, 200); // Visual feedback duration
   };
@@ -71,7 +86,7 @@ export default function Quiz({ onComplete }: QuizProps) {
               className={cn(
                 "text-left justify-start h-auto py-3 sm:py-4 whitespace-normal text-sm sm:text-base transition-colors duration-150",
                 selectedAnswer === index
-                  ? 'bg-green-500/80 border-green-400 text-white'
+                  ? 'bg-primary border-primary/50 text-primary-foreground'
                   : 'hover:bg-accent hover:text-accent-foreground'
               )}
               onClick={() => handleAnswer(index)}
@@ -81,6 +96,13 @@ export default function Quiz({ onComplete }: QuizProps) {
             </Button>
           ))}
         </div>
+        {showContinue && (
+            <div className="mt-6 text-center">
+                <Button onClick={() => advanceToNext(answerIndexes)}>
+                    Continuar
+                </Button>
+            </div>
+        )}
       </CardContent>
     </Card>
   );
