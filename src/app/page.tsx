@@ -17,23 +17,23 @@ export type ResultProfile = {
 const resultProfiles: Record<string, ResultProfile> = {
   "Procrastinador Crônico": {
     title: "O Procrastinador Crônico",
-    diagnosis: "Você estuda… mas não mantém o ritmo. Não é falta de esforço — é falta de método.\nSeu cérebro está condicionado a buscar alívio rápido, não foco profundo.\nÉ por isso que técnicas comuns não funcionaram para você.\nAntes de estudar, você precisa ativar os gatilhos neurológicos que desbloqueiam foco automático.\nQuando isso ativa, estudar deixa de ser pesado — vira natural.",
-    cta: "Quero ativar meu foco em 7 minutos (Acesso Imediato)",
+    diagnosis: "Você caiu no ciclo mais comum entre estudantes: quer estudar, se enrola, deixa pra depois e sente culpa.\nSeu cérebro só está condicionado a buscar alívio rápido, não foco.\nO bom é que esse é o perfil que mais destrava com o Método Viciado em Estudar, porque ele ativa gatilhos neurológicos que fazem o foco surgir quase automaticamente.",
+    cta: "Destravar meu foco agora",
   },
   "Estudante Inconstante": {
     title: "O Estudante Inconstante",
-    diagnosis: "Você estuda… mas não mantém o ritmo. Não é falta de esforço — é falta de método.\nSeu cérebro está condicionado a buscar alívio rápido, não foco profundo.\nÉ por isso que técnicas comuns não funcionaram para você.\nAntes de estudar, você precisa ativar os gatilhos neurológicos que desbloqueiam foco automático.\nQuando isso ativa, estudar deixa de ser pesado — vira natural.",
-    cta: "Quero ativar meu foco em 7 minutos (Acesso Imediato)",
+    diagnosis: "Você estuda… mas não mantém o ritmo. Não é falta de esforço — é falta de método.\nSeu cérebro tenta, mas não encontrou um fluxo simples que torne estudar leve e automático.\nO Método Viciado em Estudar foi criado exatamente para transformar pessoas como você em máquinas de constância.",
+    cta: "Entrar no modo constante",
   },
   "Focado, mas Bloqueado": {
     title: "Focado, mas Bloqueado",
-    diagnosis: "Você estuda… mas não mantém o ritmo. Não é falta de esforço — é falta de método.\nSeu cérebro está condicionado a buscar alívio rápido, não foco profundo.\nÉ por isso que técnicas comuns não funcionaram para você.\nAntes de estudar, você precisa ativar os gatilhos neurológicos que desbloqueiam foco automático.\nQuando isso ativa, estudar deixa de ser pesado — vira natural.",
-    cta: "Quero ativar meu foco em 7 minutos (Acesso Imediato)",
+    diagnosis: "Você sabe estudar, mas algo emocional te trava: cansaço, ansiedade, autocobrança ou frustração.\nVocê está muito perto de virar a chave — falta apenas um ajuste mental para manter o foco ligado todos os dias.\nO Método Viciado em Estudar dá exatamente essa estabilidade.",
+    cta: "Ativar meu potencial máximo",
   },
   "Quase Viciado em Estudar": {
     title: "Quase Viciado em Estudar",
-    diagnosis: "Você estuda… mas não mantém o ritmo. Não é falta de esforço — é falta de método.\nSeu cérebro está condicionado a buscar alívio rápido, não foco profundo.\nÉ por isso que técnicas comuns não funcionaram para você.\nAntes de estudar, você precisa ativar os gatiligos neurológicos que desbloqueiam foco automático.\nQuando isso ativa, estudar deixa de ser pesado — vira natural.",
-    cta: "Quero ativar meu foco em 7 minutos (Acesso Imediato)",
+    diagnosis: "Você já está próximo do seu auge. Seu cérebro responde bem ao estudo, falta só uma estrutura que mantenha seu ritmo sempre alto, sem oscilações.\nO Método Viciado em Estudar é ideal para elevar alguém como você ao estado de foco automático.",
+    cta: "Virar 100% Viciado em Estudar",
   },
 };
 
