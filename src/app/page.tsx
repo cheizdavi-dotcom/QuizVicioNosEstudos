@@ -16,12 +16,12 @@ export type ResultProfile = {
 
 const resultProfiles: Record<string, ResultProfile> = {
   "Procrastinador Crônico": {
-    title: "O Procrastinador Crônico",
+    title: "Procrastinador Crônico",
     diagnosis: "Você caiu no ciclo mais comum entre estudantes: quer estudar, se enrola, deixa pra depois e sente culpa.\nSeu cérebro só está condicionado a buscar alívio rápido, não foco.\nO bom é que esse é o perfil que mais destrava com o Método Viciado em Estudar, porque ele ativa gatilhos neurológicos que fazem o foco surgir quase automaticamente.",
     cta: "Destravar meu foco agora",
   },
   "Estudante Inconstante": {
-    title: "O Estudante Inconstante",
+    title: "Estudante Inconstante",
     diagnosis: "Você estuda… mas não mantém o ritmo. Não é falta de esforço — é falta de método.\nSeu cérebro tenta, mas não encontrou um fluxo simples que torne estudar leve e automático.\nO Método Viciado em Estudar foi criado exatamente para transformar pessoas como você em máquinas de constância.",
     cta: "Entrar no modo constante",
   },
