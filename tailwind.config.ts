@@ -14,6 +14,9 @@ export default {
         headline: ['Inter', 'sans-serif'],
         code: ['monospace'],
       },
+      boxShadow: {
+        'inner-strong': 'inset 0 4px 10px 0 rgb(0 0 0 / 0.2)',
+      },
       colors: {
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',

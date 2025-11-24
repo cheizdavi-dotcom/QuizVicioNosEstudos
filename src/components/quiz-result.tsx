@@ -1,7 +1,7 @@
 import type { ResultProfile } from '@/app/page';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { CheckCircle2, MoveRight } from 'lucide-react';
+import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
+import { Brain, CheckCircle2, Lightbulb, MoveRight, Quote } from 'lucide-react';
 
 interface QuizResultProps {
   result: ResultProfile;
@@ -18,39 +18,66 @@ export default function QuizResult({ result, onRestart }: QuizResultProps) {
     "Quase Viciado em Estudar": "Você já sente o prazer do aprendizado e a satisfação do dever cumprido. O motor está ligado e funcionando, mas ainda engasga de vez em quando. Falta apenas o ajuste fino, a estrutura que transforma seu bom desempenho em um hábito inabalável, um verdadeiro vício em evoluir.",
   }
 
+  const diagnosisPoints = diagnosis.split('\n');
+
   return (
-    <Card className="w-full max-w-3xl animate-fade-in-up shadow-2xl shadow-primary/20">
-      <CardHeader className="items-center text-center p-6 md:p-8">
-        <CheckCircle2 className="w-14 h-14 sm:w-16 sm:h-16 text-primary mb-4 animate-scale-in" />
-        <p className="text-primary font-bold">Resultado encontrado!</p>
-        <CardTitle className="text-2xl sm:text-3xl md:text-4xl font-extrabold mt-2 text-center text-transparent bg-clip-text bg-gradient-to-r from-primary to-green-400">
+    <Card className="w-full max-w-3xl animate-fade-in-up bg-[#09090B] border-zinc-800 shadow-2xl shadow-primary/10">
+      <CardHeader className="items-center text-center p-6 md:p-10">
+        <div className="relative">
+          <CheckCircle2 className="w-20 h-20 text-primary animate-scale-in" />
+          <div className="absolute inset-0 -z-10 bg-primary/40 blur-2xl rounded-full animate-pulse"></div>
+        </div>
+        <p className="text-sm text-muted-foreground mt-4">Resultado encontrado!</p>
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mt-2 text-center" style={{ color: '#CCFDC8' }}>
          🔥 Seu Perfil: "{title}"
-        </CardTitle>
+        </h1>
       </CardHeader>
-      <CardContent className="px-4 sm:px-6 md:px-8 space-y-6">
-        <div className="p-4 sm:p-6 bg-secondary/30 rounded-lg border border-secondary">
-            <p className="italic text-muted-foreground leading-relaxed">"{stories[title]}"</p>
+      <CardContent className="px-4 sm:px-6 md:p-8 space-y-8">
+        
+        <div className="relative p-6 sm:p-8 bg-[#0E0F12] rounded-lg border border-primary/20 animate-fade-in-up [animation-delay:200ms]">
+            <Quote className="absolute top-4 left-4 w-8 h-8 text-primary/30 -translate-x-1 -translate-y-1" />
+            <p className="italic font-medium text-muted-foreground leading-relaxed text-center pl-4">"{stories[title]}"</p>
         </div>
-        <div className="p-4 sm:p-6 bg-secondary/50 rounded-lg border space-y-4">
+
+        <div className="p-6 sm:p-8 bg-zinc-900/50 rounded-lg border border-zinc-800 space-y-6 shadow-inner-strong animate-fade-in-up [animation-delay:400ms]">
             <div>
-              <p className="font-semibold text-foreground mb-2">Diagnóstico:</p>
-              <p className="text-muted-foreground whitespace-pre-line">{diagnosis}</p>
+              <p className="font-semibold text-lg text-foreground mb-4">Diagnóstico:</p>
+              <ul className="space-y-3">
+                {diagnosisPoints.map((point, index) => (
+                    <li key={index} className="flex items-start">
+                      <span className="text-primary mr-3 mt-1">•</span>
+                      <p className="text-muted-foreground text-base leading-relaxed">{point}</p>
+                    </li>
+                ))}
+              </ul>
             </div>
-             <div>
-              <p className="font-semibold text-foreground mb-2">A Única Crença:</p>
-              <p className="text-muted-foreground">Ativar os gatilhos neurológicos de foco é a chave para estudar com disciplina — e a melhor forma de fazer isso é com o Método Viciado em Estudar.</p>
+             
+             <div className="border-t border-zinc-700/50 my-6"></div>
+
+            <div className="relative p-6 bg-[#0E0F12] rounded-lg border border-primary/20 shadow-lg shadow-primary/5">
+                <div className="flex items-start gap-4">
+                  <Lightbulb className="w-6 h-6 text-primary shrink-0 mt-1" />
+                  <div>
+                    <h3 className="font-bold text-lg text-foreground mb-2">A Única Crença</h3>
+                    <p className="text-muted-foreground font-semibold text-base leading-relaxed">Ativar os gatilhos neurológicos de foco é a chave para estudar com disciplina — e a melhor forma de fazer isso é com o Método Viciado em Estudar.</p>
+                  </div>
+                </div>
             </div>
         </div>
+
       </CardContent>
-      <CardFooter className="flex-col gap-4 p-6 md:p-8">
-        <Button asChild size="lg" className="w-full text-base sm:text-lg font-bold group animate-pulse">
-          <a href="#">
-            {cta}
-            <MoveRight className="ml-2 transition-transform group-hover:translate-x-1" />
-          </a>
-        </Button>
-        <p className="text-xs text-muted-foreground mt-2">Disponível apenas para quem completou o diagnóstico.</p>
-        <Button variant="link" onClick={onRestart} className="text-muted-foreground">Fazer o quiz novamente</Button>
+      <CardFooter className="flex-col gap-4 p-6 md:p-10 pt-4">
+        <div className="relative w-full my-4">
+            <Button asChild size="lg" className="w-full h-14 text-lg font-bold group bg-gradient-to-t from-primary/80 to-primary text-primary-foreground transition-transform hover:scale-105">
+              <a href="#">
+                {cta}
+                <MoveRight className="ml-3 transition-transform group-hover:translate-x-1.5" />
+              </a>
+            </Button>
+            <div className="absolute inset-0 -z-10 bg-primary/30 blur-xl rounded-full animate-pulse"></div>
+        </div>
+        <p className="text-xs italic text-[#7D7D7D]">Disponível apenas para quem completou o diagnóstico.</p>
+        <Button variant="link" onClick={onRestart} className="mt-4 text-[#8AFF9A] hover:text-primary hover:no-underline underline-offset-4 decoration-from-font">Fazer o quiz novamente</Button>
       </CardFooter>
     </Card>
   );
