@@ -26,28 +26,31 @@ export default function Quiz({ onComplete }: QuizProps) {
     if (isAnimatingOut) return;
 
     setSelectedAnswer(answerIndex);
-    const newAnswerIndexes = [...answerIndexes, answerIndex];
-    setAnswerIndexes(newAnswerIndexes);
-    setIsAnimatingOut(true);
-
-    // Feedback visual de 150ms
+    
     setTimeout(() => {
-      if (currentQuestionIndex < quizQuestions.length - 1) {
-        setCurrentQuestionIndex(currentQuestionIndex + 1);
-        setSelectedAnswer(null); // Limpa a seleção
-        setIsAnimatingOut(false);
-      } else {
-        onComplete(newAnswerIndexes);
-      }
-    }, 150);
+      const newAnswerIndexes = [...answerIndexes, answerIndex];
+      setAnswerIndexes(newAnswerIndexes);
+      setIsAnimatingOut(true);
+
+      setTimeout(() => {
+        if (currentQuestionIndex < quizQuestions.length - 1) {
+          setCurrentQuestionIndex(currentQuestionIndex + 1);
+          setSelectedAnswer(null);
+          setIsAnimatingOut(false);
+        } else {
+          onComplete(newAnswerIndexes);
+        }
+      }, 350); // duration of the out animation
+    }, 200); // Visual feedback duration
   };
 
   const currentQuestion = quizQuestions[currentQuestionIndex];
 
   return (
     <Card className={cn(
-        "w-full max-w-3xl shadow-2xl shadow-primary/10 transition-opacity duration-300",
-        isAnimatingOut ? "opacity-0" : "opacity-100"
+        "w-full max-w-3xl shadow-2xl shadow-primary/10",
+        "animate-fade-in-up",
+        isAnimatingOut && "animate-fade-out-up"
     )}>
       <CardHeader className="p-6 md:p-8">
         <Progress value={progress} className="w-full h-2 mb-6" />
@@ -68,11 +71,11 @@ export default function Quiz({ onComplete }: QuizProps) {
               className={cn(
                 "text-left justify-start h-auto py-4 whitespace-normal text-base transition-colors duration-150",
                 selectedAnswer === index
-                  ? 'bg-primary text-primary-foreground'
+                  ? 'bg-green-500/80 border-green-400 text-white' // Feedback visual verde
                   : 'hover:bg-accent hover:text-accent-foreground'
               )}
               onClick={() => handleAnswer(index)}
-              disabled={isAnimatingOut}
+              disabled={isAnimatingOut || selectedAnswer !== null}
             >
               {option}
             </Button>
