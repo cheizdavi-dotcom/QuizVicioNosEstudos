@@ -22,53 +22,53 @@ export default function QuizResult({ result, onRestart }: QuizResultProps) {
 
   return (
     <Card className="w-full max-w-3xl animate-fade-in-up bg-[#09090B] border-zinc-800 shadow-2xl shadow-primary/10">
-      <CardHeader className="items-center text-center p-6 md:p-10">
+      <CardHeader className="items-center text-center p-6">
         <div className="relative">
-          <CheckCircle2 className="w-20 h-20 text-primary animate-scale-in" />
+          <CheckCircle2 className="w-16 h-16 sm:w-20 sm:h-20 text-primary animate-scale-in" />
           <div className="absolute inset-0 -z-10 bg-primary/40 blur-2xl rounded-full animate-pulse"></div>
         </div>
-        <p className="text-sm text-muted-foreground mt-4">Resultado encontrado!</p>
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mt-2 text-center" style={{ color: '#CCFDC8' }}>
-         🔥 Seu Perfil: "{title}"
+        <p className="text-xs sm:text-sm text-muted-foreground mt-4">Resultado encontrado!</p>
+        <h1 className="text-3xl sm:text-4xl font-extrabold mt-2 text-center" style={{ color: '#CCFDC8' }}>
+         Seu Perfil: {title}
         </h1>
       </CardHeader>
-      <CardContent className="px-4 sm:px-6 md:p-8 space-y-8">
+      <CardContent className="px-4 sm:px-6 space-y-6">
         
-        <div className="relative p-6 sm:p-8 bg-[#0E0F12] rounded-lg border border-primary/20 animate-fade-in-up [animation-delay:200ms]">
-            <Quote className="absolute top-4 left-4 w-8 h-8 text-primary/30 -translate-x-1 -translate-y-1" />
-            <p className="italic font-medium text-muted-foreground leading-relaxed text-center pl-4">"{stories[title]}"</p>
+        <div className="relative p-6 bg-[#0E0F12] rounded-lg border border-primary/20 animate-fade-in-up [animation-delay:200ms]">
+            <Quote className="absolute top-4 left-4 w-6 h-6 sm:w-8 sm:h-8 text-primary/30 -translate-x-1 -translate-y-1" />
+            <p className="italic font-medium text-muted-foreground leading-relaxed text-center text-sm sm:text-base">"{stories[title]}"</p>
         </div>
 
-        <div className="p-6 sm:p-8 bg-zinc-900/50 rounded-lg border border-zinc-800 space-y-6 shadow-inner-strong animate-fade-in-up [animation-delay:400ms]">
+        <div className="p-6 bg-zinc-900/50 rounded-lg border border-zinc-800 space-y-6 shadow-inner-strong animate-fade-in-up [animation-delay:400ms]">
             <div>
-              <p className="font-semibold text-lg text-foreground mb-4">Diagnóstico:</p>
+              <p className="font-semibold text-base sm:text-lg text-foreground mb-4">Diagnóstico:</p>
               <ul className="space-y-3">
                 {diagnosisPoints.map((point, index) => (
                     <li key={index} className="flex items-start">
-                      <span className="text-primary mr-3 mt-1">•</span>
-                      <p className="text-muted-foreground text-base leading-relaxed">{point}</p>
+                      <span className="text-primary mr-3 mt-1 text-lg">•</span>
+                      <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">{point}</p>
                     </li>
                 ))}
               </ul>
             </div>
              
-             <div className="border-t border-zinc-700/50 my-6"></div>
+             <div className="border-t border-zinc-700/50 my-4"></div>
 
             <div className="relative p-6 bg-[#0E0F12] rounded-lg border border-primary/20 shadow-lg shadow-primary/5">
                 <div className="flex items-start gap-4">
-                  <Lightbulb className="w-6 h-6 text-primary shrink-0 mt-1" />
+                  <Lightbulb className="w-10 h-10 sm:w-6 sm:h-6 text-primary shrink-0 mt-1" />
                   <div>
-                    <h3 className="font-bold text-lg text-foreground mb-2">A Única Crença</h3>
-                    <p className="text-muted-foreground font-semibold text-base leading-relaxed">Ativar os gatilhos neurológicos de foco é a chave para estudar com disciplina — e a melhor forma de fazer isso é com o Método Viciado em Estudar.</p>
+                    <h3 className="font-bold text-base sm:text-lg text-foreground mb-2">A Única Crença</h3>
+                    <p className="text-muted-foreground font-semibold text-sm sm:text-base leading-relaxed">Ativar os gatilhos neurológicos de foco é a chave para estudar com disciplina — e a melhor forma de fazer isso é com o Método Viciado em Estudar.</p>
                   </div>
                 </div>
             </div>
         </div>
 
       </CardContent>
-      <CardFooter className="flex-col gap-4 p-6 md:p-10 pt-4">
+      <CardFooter className="flex-col gap-4 p-6 pt-4">
         <div className="relative w-full my-4">
-            <Button asChild size="lg" className="w-full h-14 text-lg font-bold group bg-gradient-to-t from-primary/80 to-primary text-primary-foreground transition-transform hover:scale-105">
+            <Button asChild size="lg" className="w-full h-14 text-base sm:text-lg font-bold group bg-gradient-to-t from-primary/80 to-primary text-primary-foreground transition-transform hover:scale-105">
               <a href="#">
                 {cta}
                 <MoveRight className="ml-3 transition-transform group-hover:translate-x-1.5" />

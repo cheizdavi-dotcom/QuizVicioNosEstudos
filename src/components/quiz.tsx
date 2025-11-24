@@ -36,6 +36,7 @@ export default function Quiz({ onComplete }: QuizProps) {
       }
       if(advanceTimeoutRef.current) {
         clearTimeout(advanceTimeoutRef.current);
+        advanceTimeoutRef.current = null;
       }
   };
 
@@ -46,17 +47,16 @@ export default function Quiz({ onComplete }: QuizProps) {
     const newAnswerIndexes = [...answerIndexes, answerIndex];
     setAnswerIndexes(newAnswerIndexes);
     
-    // Fallback to show "Continue" button if auto-advance fails
     advanceTimeoutRef.current = setTimeout(() => {
         setShowContinue(true);
-    }, 2000);
+    }, 3000);
 
     setTimeout(() => {
       setIsAnimatingOut(true);
       setTimeout(() => {
         advanceToNext(newAnswerIndexes);
-      }, 350); // duration of the out animation
-    }, 200); // Visual feedback duration
+      }, 300);
+    }, 200);
   };
 
   const currentQuestion = quizQuestions[currentQuestionIndex];
@@ -67,24 +67,24 @@ export default function Quiz({ onComplete }: QuizProps) {
         "animate-fade-in-up",
         isAnimatingOut && "animate-fade-out-up"
     )}>
-      <CardHeader className="p-6 md:p-8">
-        <Progress value={progress} className="w-full h-2 mb-6" />
+      <CardHeader className="p-6">
+        <Progress value={progress} className="w-full h-2 mb-4" />
         <p className="text-sm font-medium text-primary mb-2">
           Pergunta {currentQuestionIndex + 1} de {quizQuestions.length}
         </p>
-        <CardTitle className="text-xl sm:text-2xl md:text-3xl font-bold leading-tight">
+        <CardTitle className="text-xl sm:text-2xl font-bold leading-tight">
           {currentQuestion.question}
         </CardTitle>
       </CardHeader>
-      <CardContent className="p-6 md:p-8 pt-0">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
+      <CardContent className="p-6 pt-0">
+        <div className="grid grid-cols-1 gap-3">
           {currentQuestion.options.map((option, index) => (
             <Button
               key={index}
               variant="outline"
               size="lg"
               className={cn(
-                "text-left justify-start h-auto py-3 sm:py-4 whitespace-normal text-sm sm:text-base transition-colors duration-150",
+                "text-left justify-start h-auto py-3 whitespace-normal text-sm sm:text-base transition-colors duration-150",
                 selectedAnswer === index
                   ? 'bg-primary border-primary/50 text-primary-foreground'
                   : 'hover:bg-accent hover:text-accent-foreground'
