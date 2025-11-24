@@ -69,7 +69,7 @@ export default function QuizResult({ result, onRestart }: QuizResultProps) {
       <CardFooter className="flex-col gap-4 p-6 pt-4">
         <div className="relative w-full my-4">
             <Button asChild size="lg" className="w-full h-14 text-base sm:text-lg font-bold group bg-gradient-to-t from-primary/80 to-primary text-primary-foreground transition-transform hover:scale-105">
-              <a href="#">
+              <a href="https://quiz.cakto.com.br/preview/viciado-em-estudar-WVehoO">
                 {cta}
                 <MoveRight className="ml-3 transition-transform group-hover:translate-x-1.5" />
               </a>
