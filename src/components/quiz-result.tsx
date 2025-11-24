@@ -22,7 +22,7 @@ export default function QuizResult({ result, onRestart }: QuizResultProps) {
     <Card className="w-full max-w-3xl animate-fade-in-up shadow-2xl shadow-primary/20">
       <CardHeader className="items-center text-center p-6 md:p-8">
         <CheckCircle2 className="w-16 h-16 text-primary mb-4 animate-scale-in" />
-        <p className="text-primary font-bold">Seu Diagnóstico Está Pronto!</p>
+        <p className="text-primary font-bold">Resultado encontrado!</p>
         <CardTitle className="text-3xl md:text-4xl font-extrabold mt-2 text-center text-transparent bg-clip-text bg-gradient-to-r from-primary to-green-400">
          🔥 Seu Perfil: "{title}"
         </CardTitle>
@@ -43,6 +43,7 @@ export default function QuizResult({ result, onRestart }: QuizResultProps) {
             <MoveRight className="ml-2 transition-transform group-hover:translate-x-1" />
           </a>
         </Button>
+        <p className="text-xs text-muted-foreground mt-2">Disponível apenas para quem completou o diagnóstico.</p>
         <Button variant="link" onClick={onRestart} className="text-muted-foreground">Fazer o quiz novamente</Button>
       </CardFooter>
     </Card>
