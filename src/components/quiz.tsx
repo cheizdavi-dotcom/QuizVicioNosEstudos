@@ -23,7 +23,7 @@ export default function Quiz({ onComplete }: QuizProps) {
   }, [currentQuestionIndex]);
 
   const handleAnswer = (answerIndex: number) => {
-    if (isAnimatingOut) return;
+    if (selectedAnswer !== null) return;
 
     setSelectedAnswer(answerIndex);
     
@@ -57,25 +57,25 @@ export default function Quiz({ onComplete }: QuizProps) {
         <p className="text-sm font-medium text-primary mb-2">
           Pergunta {currentQuestionIndex + 1} de {quizQuestions.length}
         </p>
-        <CardTitle className="text-2xl md:text-3xl font-bold leading-tight">
+        <CardTitle className="text-xl sm:text-2xl md:text-3xl font-bold leading-tight">
           {currentQuestion.question}
         </CardTitle>
       </CardHeader>
       <CardContent className="p-6 md:p-8 pt-0">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
           {currentQuestion.options.map((option, index) => (
             <Button
               key={index}
               variant="outline"
               size="lg"
               className={cn(
-                "text-left justify-start h-auto py-4 whitespace-normal text-base transition-colors duration-150",
+                "text-left justify-start h-auto py-3 sm:py-4 whitespace-normal text-sm sm:text-base transition-colors duration-150",
                 selectedAnswer === index
-                  ? 'bg-green-500/80 border-green-400 text-white' // Feedback visual verde
+                  ? 'bg-green-500/80 border-green-400 text-white'
                   : 'hover:bg-accent hover:text-accent-foreground'
               )}
               onClick={() => handleAnswer(index)}
-              disabled={isAnimatingOut || selectedAnswer !== null}
+              disabled={selectedAnswer !== null}
             >
               {option}
             </Button>

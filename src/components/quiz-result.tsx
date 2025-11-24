@@ -21,23 +21,23 @@ export default function QuizResult({ result, onRestart }: QuizResultProps) {
   return (
     <Card className="w-full max-w-3xl animate-fade-in-up shadow-2xl shadow-primary/20">
       <CardHeader className="items-center text-center p-6 md:p-8">
-        <CheckCircle2 className="w-16 h-16 text-primary mb-4 animate-scale-in" />
+        <CheckCircle2 className="w-14 h-14 sm:w-16 sm:h-16 text-primary mb-4 animate-scale-in" />
         <p className="text-primary font-bold">Resultado encontrado!</p>
-        <CardTitle className="text-3xl md:text-4xl font-extrabold mt-2 text-center text-transparent bg-clip-text bg-gradient-to-r from-primary to-green-400">
+        <CardTitle className="text-2xl sm:text-3xl md:text-4xl font-extrabold mt-2 text-center text-transparent bg-clip-text bg-gradient-to-r from-primary to-green-400">
          🔥 Seu Perfil: "{title}"
         </CardTitle>
       </CardHeader>
-      <CardContent className="px-6 md:px-8 space-y-6">
-        <div className="p-6 bg-secondary/30 rounded-lg border border-secondary">
+      <CardContent className="px-4 sm:px-6 md:px-8 space-y-4 sm:space-y-6">
+        <div className="p-4 sm:p-6 bg-secondary/30 rounded-lg border border-secondary">
             <p className="italic text-muted-foreground leading-relaxed">"{stories[title]}"</p>
         </div>
-        <div className="p-6 bg-secondary/50 rounded-lg border">
+        <div className="p-4 sm:p-6 bg-secondary/50 rounded-lg border">
             <p className="font-semibold text-foreground mb-2">Diagnóstico Detalhado:</p>
             <p className="text-muted-foreground">{diagnosis}</p>
         </div>
       </CardContent>
       <CardFooter className="flex-col gap-4 p-6 md:p-8">
-        <Button asChild size="lg" className="w-full text-lg font-bold group animate-pulse">
+        <Button asChild size="lg" className="w-full text-base sm:text-lg font-bold group animate-pulse">
           <a href="#">
             {cta}
             <MoveRight className="ml-2 transition-transform group-hover:translate-x-1" />

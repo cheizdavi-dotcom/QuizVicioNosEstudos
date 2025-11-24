@@ -77,20 +77,20 @@ export default function Home() {
       default:
         return (
           <Card className="w-full max-w-2xl text-center shadow-2xl shadow-primary/20 animate-fade-in">
-            <CardHeader className="p-8 md:p-12">
-              <div className="mx-auto bg-primary/10 p-4 rounded-full mb-6 border border-primary/20 shadow-lg shadow-primary/20">
-                 <BrainCircuit className="w-12 h-12 text-primary" />
+            <CardHeader className="p-6 sm:p-8 md:p-12">
+              <div className="mx-auto bg-primary/10 p-3 sm:p-4 rounded-full mb-4 sm:mb-6 border border-primary/20 shadow-lg shadow-primary/20">
+                 <BrainCircuit className="w-10 h-10 sm:w-12 sm:h-12 text-primary" />
               </div>
-              <CardTitle className="text-3xl md:text-4xl font-extrabold">Descubra Seu Perfil de Estudante</CardTitle>
-              <CardDescription className="text-muted-foreground text-lg pt-4 leading-relaxed">
+              <CardTitle className="text-2xl sm:text-3xl md:text-4xl font-extrabold">Descubra Seu Perfil de Estudante</CardTitle>
+              <CardDescription className="text-base sm:text-lg text-muted-foreground pt-4 leading-relaxed">
                 90% dos estudantes travam o foco por causa de padrões ocultos no cérebro — descubra em qual deles você caiu em menos de 60 segundos.
               </CardDescription>
             </CardHeader>
-            <CardContent className="p-8 md:p-12 pt-0">
-              <Button size="lg" onClick={handleStartQuiz} className="w-full text-lg font-bold">
+            <CardContent className="p-6 sm:p-8 md:p-12 pt-0">
+              <Button size="lg" onClick={handleStartQuiz} className="w-full text-base sm:text-lg font-bold">
                 Começar Meu Diagnóstico Agora
               </Button>
-               <p className="text-sm text-muted-foreground mt-4">Leva menos de 1 minuto.</p>
+               <p className="text-xs sm:text-sm text-muted-foreground mt-4">Leva menos de 1 minuto.</p>
             </CardContent>
           </Card>
         );
@@ -98,7 +98,7 @@ export default function Home() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-4 sm:p-8 md:p-12 bg-background">
+    <main className="flex min-h-screen flex-col items-center justify-center p-4 bg-background">
       {renderContent()}
     </main>
   );
