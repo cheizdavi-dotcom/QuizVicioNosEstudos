@@ -11,30 +11,57 @@ import AnalyzingScreen from '@/components/analyzing-screen';
 
 export type ResultProfile = {
   title: string;
-  diagnosis: string;
+  diagnosis: string[];
+  pontoCritico: string;
+  acaoAcreditavel: string;
+  solucaoAcreditavel: string;
   cta: string;
 };
 
 const resultProfiles: Record<string, ResultProfile> = {
-  "Procrastinador Crônico": {
-    title: "Procrastinador Crônico",
-    diagnosis: "Você caiu no ciclo mais comum entre estudantes: quer estudar, se enrola, deixa pra depois e sente culpa.\nSeu cérebro só está condicionado a buscar alívio rápido, não foco.\nO bom é que esse é o perfil que mais destrava com o Método Viciado em Estudar, porque ele ativa gatilhos neurológicos que fazem o foco surgir quase automaticamente.",
-    cta: "Quero ativar meu foco em 7 minutos (Acesso Imediato)",
+  "Focado(a), mas Bloqueado(a)": {
+    title: "Focado(a), mas Bloqueado(a)",
+    diagnosis: [
+      "Seu cérebro entra em hiperalerta quando tenta focar.",
+      "Você sabe o que fazer, mas a ansiedade cria micro-bloqueios que drenam sua energia."
+    ],
+    pontoCritico: "O cérebro procura alívio imediato → trava o foco.",
+    acaoAcreditavel: "Rebaixar o nível de ativação emocional ANTES de tentar focar.",
+    solucaoAcreditavel: "Ativar o protocolo de “Destravamento Neurológico de Foco” (técnicas rápidas que acalmam o cérebro e liberam o foco).",
+    cta: "Quero Ativar Meu Destravamento Neurológico",
   },
-  "Estudante Inconstante": {
-    title: "Estudante Inconstante",
-    diagnosis: "Você estuda… mas não mantém o ritmo. Não é falta de esforço — é falta de método.\nSeu cérebro está condicionado a buscar alívio rápido, não foco profundo.\nÉ por isso que técnicas comuns não funcionaram para você.\nAntes de estudar, você precisa ativar os gatilhos neurológicos que desbloqueiam foco automático.\nQuando isso ativa, estudar deixa de ser pesado — vira natural.",
-    cta: "Quero ativar meu foco em 7 minutos (Acesso Imediato)",
+  "Foco Fragmentado": {
+    title: "Foco Fragmentado",
+    diagnosis: [
+      "Seu cérebro está condicionado a buscar picos rápidos de dopamina.",
+      "Isso te dá a sensação de “foco quebrado”."
+    ],
+    pontoCritico: "Iniciar tarefas é difícil porque seu cérebro não está otimizado para profundidade.",
+    acaoAcreditavel: "Reduzir competidores de dopamina antes de começar.",
+    solucaoAcreditavel: "Ativar o “Modo Foco de 3 Minutos” para ensinar o cérebro a entrar em modo profundo.",
+    cta: "Quero Ativar o Modo Foco",
   },
-  "Focado, mas Bloqueado": {
-    title: "Focado, mas Bloqueado",
-    diagnosis: "Você sabe estudar, mas algo emocional te trava: cansaço, ansiedade, autocobrança ou frustração.\nVocê está muito perto de virar a chave — falta apenas um ajuste mental para manter o foco ligado todos os dias.\nO Método Viciado em Estudar dá exatamente essa estabilidade.",
-    cta: "Quero ativar meu foco em 7 minutos (Acesso Imediato)",
+  "Energia Baixa Mental": {
+    title: "Energia Baixa Mental",
+    diagnosis: [
+      "Seu problema não é preguiça real — e sim baixa ativação neurológica.",
+      "Seu cérebro economiza energia sempre que pode."
+    ],
+    pontoCritico: "Perde energia mental muito rápido.",
+    acaoAcreditavel: "Aumentar ativação pré-tarefa.",
+    solucaoAcreditavel: "Aplicar o “Aquecimento de Foco” — microativação que liga o cérebro antes da tarefa.",
+    cta: "Quero Fazer Meu Aquecimento de Foco",
   },
-  "Quase Viciado em Estudar": {
-    title: "Quase Viciado em Estudar",
-    diagnosis: "Você já está próximo do seu auge. Seu cérebro responde bem ao estudo, falta só uma estrutura que mantenha seu ritmo sempre alto, sem oscilações.\nO Método Viciado em Estudar é ideal para elevar alguém como você ao estado de foco automático.",
-    cta: "Quero ativar meu foco em 7 minutos (Acesso Imediato)",
+  "Ativo(a), mas Desorganizado(a)": {
+    title: "Ativo(a), mas Desorganizado(a)",
+    diagnosis: [
+      "Seu cérebro tem energia, mas sua atenção se fragmenta.",
+      "Você começa várias coisas e finaliza poucas."
+    ],
+    pontoCritico: "Alta ativação + baixa direção.",
+    acaoAcreditavel: "Dar um único alvo para o cérebro por vez.",
+    solucaoAcreditavel: "Protocolo “1 Meta por Ciclo” — técnica que fixa a atenção em blocos.",
+    cta: "Quero Meu Protocolo de 1 Meta",
   },
 };
 
@@ -51,14 +78,14 @@ export default function Home() {
     const totalScore = answerIndexes.reduce((sum, index) => sum + (index + 1), 0);
     
     let profileKey: string;
-    if (totalScore >= 5 && totalScore <= 9) {
-      profileKey = "Procrastinador Crônico";
-    } else if (totalScore >= 10 && totalScore <= 13) {
-      profileKey = "Estudante Inconstante";
-    } else if (totalScore >= 14 && totalScore <= 17) {
-      profileKey = "Focado, mas Bloqueado";
-    } else { // 18-20
-      profileKey = "Quase Viciado em Estudar";
+    if (totalScore >= 5 && totalScore <= 7) {
+      profileKey = "Focado(a), mas Bloqueado(a)";
+    } else if (totalScore >= 8 && totalScore <= 11) {
+      profileKey = "Foco Fragmentado";
+    } else if (totalScore >= 12 && totalScore <= 15) {
+      profileKey = "Energia Baixa Mental";
+    } else { // 16-20
+      profileKey = "Ativo(a), mas Desorganizado(a)";
     }
 
     setResult(resultProfiles[profileKey]);
@@ -86,7 +113,7 @@ export default function Home() {
         return (
           <Card className="w-full max-w-2xl text-center shadow-2xl shadow-primary/20 animate-fade-in sm:overflow-hidden sm:rounded-lg">
             <Image 
-              src="https://i.imgur.com/3sF4aiS.png"
+              src="https://imgur.com/3sF4aiS.png"
               alt="Cérebro iluminado representando padrões de foco"
               width={1200}
               height={630}
