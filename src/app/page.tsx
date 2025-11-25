@@ -86,26 +86,27 @@ export default function Home() {
         return (
           <Card className="w-full max-w-2xl text-center shadow-2xl shadow-primary/20 animate-fade-in sm:overflow-hidden sm:rounded-lg">
             <Image 
-              src="https://i.imgur.com/3sF4aiS.png"
-              alt="Capa do Quiz Viciado em Estudar"
+              src="https://picsum.photos/seed/futurebrain/1200/630"
+              alt="Cérebro iluminado representando padrões de foco"
               width={1200}
               height={630}
               className="w-full h-auto object-cover"
+              data-ai-hint="futuristic brain neon"
             />
             <CardHeader className="p-6 sm:p-8">
               <div className="mx-auto bg-primary/10 p-3 rounded-full mb-4 border border-primary/20 shadow-lg shadow-primary/20">
                  <BrainCircuit className="w-8 h-8 sm:w-12 sm:h-12 text-primary" />
               </div>
-              <CardTitle className="text-2xl sm:text-3xl font-extrabold">Descubra Seu Perfil de Estudante</CardTitle>
+              <CardTitle className="text-2xl sm:text-3xl font-extrabold">Descubra o Padrão Cerebral Que Está Travando Seu Foco</CardTitle>
               <CardDescription className="text-base text-muted-foreground pt-2 leading-relaxed max-w-prose mx-auto">
-                90% dos estudantes travam o foco por padrões ocultos no cérebro — descubra em qual deles você caiu em menos de 60 segundos.
+                90% das pessoas perdem o foco por padrões invisíveis no cérebro — descubra o seu em menos de 60 segundos.
               </CardDescription>
             </CardHeader>
             <CardContent className="p-6 pt-0">
               <Button size="lg" onClick={handleStartQuiz} className="w-full text-base font-bold sm:w-auto sm:px-12">
-                Começar Meu Diagnóstico Agora
+                Iniciar Meu Diagnóstico
               </Button>
-               <p className="text-xs text-muted-foreground mt-3">Leva menos de 1 minuto.</p>
+               <p className="text-xs text-muted-foreground mt-3">+ de 42.000 diagnósticos realizados.</p>
             </CardContent>
           </Card>
         );
