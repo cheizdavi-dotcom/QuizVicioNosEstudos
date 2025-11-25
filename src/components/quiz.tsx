@@ -47,36 +47,33 @@ export default function Quiz({ onComplete }: QuizProps) {
     const newAnswerIndexes = [...answerIndexes, answerIndex];
     setAnswerIndexes(newAnswerIndexes);
     
-    advanceTimeoutRef.current = setTimeout(() => {
-        setShowContinue(true);
-    }, 3000);
-
+    // Auto-advance after a short delay
     setTimeout(() => {
       setIsAnimatingOut(true);
       setTimeout(() => {
         advanceToNext(newAnswerIndexes);
-      }, 300);
-    }, 200);
+      }, 300); // matches fade-out duration
+    }, 500); // Short delay to show selection
   };
 
   const currentQuestion = quizQuestions[currentQuestionIndex];
 
   return (
     <Card className={cn(
-        "w-full max-w-3xl shadow-2xl shadow-primary/10",
+        "w-full max-w-2xl shadow-2xl shadow-primary/10",
         "animate-fade-in-up",
         isAnimatingOut && "animate-fade-out-up"
     )}>
-      <CardHeader className="p-6">
+      <CardHeader className="p-4 sm:p-6">
         <Progress value={progress} className="w-full h-2 mb-4" />
         <p className="text-sm font-medium text-primary mb-2">
           Pergunta {currentQuestionIndex + 1} de {quizQuestions.length}
         </p>
-        <CardTitle className="text-xl sm:text-2xl font-bold leading-tight">
+        <CardTitle className="text-lg font-bold leading-tight sm:text-2xl">
           {currentQuestion.question}
         </CardTitle>
       </CardHeader>
-      <CardContent className="p-6 pt-0">
+      <CardContent className="p-4 sm:p-6 pt-0">
         <div className="grid grid-cols-1 gap-3">
           {currentQuestion.options.map((option, index) => (
             <Button
@@ -84,7 +81,7 @@ export default function Quiz({ onComplete }: QuizProps) {
               variant="outline"
               size="lg"
               className={cn(
-                "text-left justify-start h-auto py-3 whitespace-normal text-sm sm:text-base transition-colors duration-150",
+                "text-left justify-start h-auto py-3 whitespace-normal text-sm transition-colors duration-150",
                 selectedAnswer === index
                   ? 'bg-primary border-primary/50 text-primary-foreground'
                   : 'hover:bg-accent hover:text-accent-foreground'
@@ -96,13 +93,6 @@ export default function Quiz({ onComplete }: QuizProps) {
             </Button>
           ))}
         </div>
-        {showContinue && (
-            <div className="mt-6 text-center">
-                <Button onClick={() => advanceToNext(answerIndexes)}>
-                    Continuar
-                </Button>
-            </div>
-        )}
       </CardContent>
     </Card>
   );

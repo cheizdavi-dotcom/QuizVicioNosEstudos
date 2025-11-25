@@ -13,12 +13,12 @@ export default function AnalyzingScreen() {
     }, []);
 
     return (
-        <Card className="w-full max-w-xl text-center animate-fade-in shadow-2xl shadow-primary/10">
-            <CardHeader>
-                <CardTitle className="text-2xl font-bold">Analisando seu perfil...</CardTitle>
+        <Card className="w-full max-w-md text-center animate-fade-in shadow-2xl shadow-primary/10">
+            <CardHeader className="p-6">
+                <CardTitle className="text-xl sm:text-2xl font-bold">Analisando seu perfil...</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
-                 <p className="text-muted-foreground">Carregando suas métricas de foco...</p>
+            <CardContent className="p-6 pt-0 space-y-4">
+                 <p className="text-muted-foreground text-sm sm:text-base">Carregando suas métricas de foco...</p>
                  <Progress value={progress} className="w-full h-2 transition-all duration-[2000ms] ease-in-out" />
             </CardContent>
         </Card>
