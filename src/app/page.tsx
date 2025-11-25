@@ -15,53 +15,77 @@ export type ResultProfile = {
   pontoCritico: string;
   acaoAcreditavel: string;
   solucaoAcreditavel: string;
+  ponteParaSolucao: string;
   cta: string;
 };
 
 const resultProfiles: Record<string, ResultProfile> = {
-  "Focado(a), mas Bloqueado(a)": {
-    title: "Focado(a), mas Bloqueado(a)",
+  "Dopaminérgico Desregulado": {
+    title: "Seu padrão cerebral é: Dopaminérgico Desregulado",
     diagnosis: [
-      "Seu cérebro entra em hiperalerta quando tenta focar.",
-      "Você sabe o que fazer, mas a ansiedade cria micro-bloqueios que drenam sua energia."
+      "Você não é preguiçoso — seu cérebro apenas busca alívio imediato antes de buscar profundidade. Por isso você até começa, mas se distrai rápido, perde o ritmo e sente culpa depois.",
+      "Seu foco é roubado por pequenas explosões de dopamina (celular, notificações, vídeos curtos), que deixam tarefas longas mais difíceis do que deveriam ser.",
+      "Esse padrão cria:",
+      "• foco fragmentado",
+      "• procrastinação recorrente",
+      "• sensação de “sei o que preciso fazer, mas não faço”"
     ],
-    pontoCritico: "O cérebro procura alívio imediato → trava o foco.",
-    acaoAcreditavel: "Rebaixar o nível de ativação emocional ANTES de tentar focar.",
-    solucaoAcreditavel: "Ativar o protocolo de “Destravamento Neurológico de Foco” (técnicas rápidas que acalmam o cérebro e liberam o foco).",
-    cta: "Quero Ativar Meu Destravamento Neurológico",
+    pontoCritico: "",
+    acaoAcreditavel: "",
+    ponteParaSolucao: "Para destravar esse padrão, você precisa ensinar seu cérebro a gerar dopamina de forma estável, e não em picos. É exatamente isso que o Método Viciado em Estudar faz — reorganizando seus gatilhos de foco em poucos dias.",
+    solucaoAcreditavel: "",
+    cta: "Quero Destravar Meu Padrão",
   },
-  "Foco Fragmentado": {
-    title: "Foco Fragmentado",
+  "Ansioso Vigilante": {
+    title: "Seu padrão cerebral é: Ansioso Vigilante",
     diagnosis: [
-      "Seu cérebro está condicionado a buscar picos rápidos de dopamina.",
-      "Isso te dá a sensação de “foco quebrado”."
+      "Sua mente não trava porque é fraca — ela trava porque está em alerta demais.",
+      "Você pensa antes de agir, se cobra antes de começar, e revisa mentalmente cada passo antes mesmo de dar o primeiro. Isso drena sua energia e bloqueia seu foco.",
+      "Sintomas desse padrão:",
+      "• medo de errar antes de tentar",
+      "• dificuldade em iniciar tarefas",
+      "• autocobrança excessiva",
+      "• sensação de que “nunca está bom o suficiente”"
     ],
-    pontoCritico: "Iniciar tarefas é difícil porque seu cérebro não está otimizado para profundidade.",
-    acaoAcreditavel: "Reduzir competidores de dopamina antes de começar.",
-    solucaoAcreditavel: "Ativar o “Modo Foco de 3 Minutos” para ensinar o cérebro a entrar em modo profundo.",
-    cta: "Quero Ativar o Modo Foco",
+    pontoCritico: "",
+    acaoAcreditavel: "",
+    ponteParaSolucao: "Para voltar ao modo foco, você precisa tirar seu cérebro do modo ameaça. O Método Viciado em Estudar faz isso reorganizando seu sistema de atenção para que a ação volte a ser leve, fluida e natural.",
+    solucaoAcreditavel: "",
+    cta: "Quero Destravar Meu Padrão",
   },
-  "Energia Baixa Mental": {
-    title: "Energia Baixa Mental",
+  "Exaustão Neural": {
+    title: "Seu padrão cerebral é: Exaustão Neural",
     diagnosis: [
-      "Seu problema não é preguiça real — e sim baixa ativação neurológica.",
-      "Seu cérebro economiza energia sempre que pode."
+      "Seu foco não desapareceu — ele só está sem combustível.",
+      "Sua mente vem acumulando fadiga mental por dias, meses ou até anos. Isso gera preguiça, falta de clareza e dificuldade em manter constância, mesmo quando você quer melhorar.",
+      "Sintomas comuns:",
+      "• sensação de cansaço mesmo após descanso",
+      "• falta de motivação",
+      "• foco pesado, arrastado",
+      "• dificuldade em manter uma rotina"
     ],
-    pontoCritico: "Perde energia mental muito rápido.",
-    acaoAcreditavel: "Aumentar ativação pré-tarefa.",
-    solucaoAcreditavel: "Aplicar o “Aquecimento de Foco” — microativação que liga o cérebro antes da tarefa.",
-    cta: "Quero Fazer Meu Aquecimento de Foco",
+    pontoCritico: "",
+    acaoAcreditavel: "",
+    ponteParaSolucao: "Você não precisa de força de vontade — precisa reativar seu sistema de energia mental. O Método Viciado em Estudar faz isso em microciclos de 7 minutos, que reconstroem sua energia neural e destravam seu foco.",
+    solucaoAcreditavel: "",
+cta: "Quero Destravar Meu Padrão",
   },
-  "Ativo(a), mas Desorganizado(a)": {
-    title: "Ativo(a), mas Desorganizado(a)",
+  "Sobrecarga Multitarefa": {
+    title: "Seu padrão cerebral é: Sobrecarga Multitarefa",
     diagnosis: [
-      "Seu cérebro tem energia, mas sua atenção se fragmenta.",
-      "Você começa várias coisas e finaliza poucas."
+      "Seu cérebro não está lento — ele está sobrecarregado.",
+      "Você vive tentando fazer muitas coisas ao mesmo tempo, e isso fragmenta seu foco, aumenta o cortisol e faz sua produtividade despencar.",
+      "Sintomas desse padrão:",
+      "• mente acelerada",
+      "• listas enormes e pouco resultado",
+      "• sensação de caos e desorganização",
+      "• foco que não se fixa em nada por muito tempo"
     ],
-    pontoCritico: "Alta ativação + baixa direção.",
-    acaoAcreditavel: "Dar um único alvo para o cérebro por vez.",
-    solucaoAcreditavel: "Protocolo “1 Meta por Ciclo” — técnica que fixa a atenção em blocos.",
-    cta: "Quero Meu Protocolo de 1 Meta",
+    pontoCritico: "",
+    acaoAcreditavel: "",
+    ponteParaSolucao: "O Método Viciado em Estudar reduz até 80% da dispersão em poucos dias, ensinando seu cérebro a entrar em foco profundo e priorizar o que realmente importa.",
+    solucaoAcreditavel: "",
+    cta: "Quero Destravar Meu Padrão",
   },
 };
 
@@ -79,13 +103,13 @@ export default function Home() {
     
     let profileKey: string;
     if (totalScore >= 5 && totalScore <= 7) {
-      profileKey = "Focado(a), mas Bloqueado(a)";
+      profileKey = "Ansioso Vigilante";
     } else if (totalScore >= 8 && totalScore <= 11) {
-      profileKey = "Foco Fragmentado";
+      profileKey = "Dopaminérgico Desregulado";
     } else if (totalScore >= 12 && totalScore <= 15) {
-      profileKey = "Energia Baixa Mental";
+      profileKey = "Exaustão Neural";
     } else { // 16-20
-      profileKey = "Ativo(a), mas Desorganizado(a)";
+      profileKey = "Sobrecarga Multitarefa";
     }
 
     setResult(resultProfiles[profileKey]);
@@ -126,7 +150,7 @@ export default function Home() {
               </div>
               <CardTitle className="text-2xl font-extrabold sm:text-3xl">Descubra o Padrão Cerebral Que Está Travando Seu Foco</CardTitle>
               <CardDescription className="text-sm text-muted-foreground pt-2 leading-relaxed max-w-prose mx-auto sm:text-base">
-                90% das pessoas perdem o foco por padrões invisíveis no cérebro — descubra o seu em menos de 60 segundos.
+                90% das pessoas perdem o foco por padrões invisíveis no cérebro — descubra qual está segurando você em menos de 60 segundos.
               </CardDescription>
             </CardHeader>
             <CardContent className="p-6 pt-0">
