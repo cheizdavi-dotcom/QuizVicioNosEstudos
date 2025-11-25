@@ -23,7 +23,7 @@ const resultProfiles: Record<string, ResultProfile> = {
   },
   "Estudante Inconstante": {
     title: "Estudante Inconstante",
-    diagnosis: "Você estuda… mas não mantém o ritmo. Não é falta de esforço — é falta de método.\nSeu cérebro tenta, mas ainda não encontrou um fluxo simples que torne estudar leve e automático.\nO Método Viciado em Estudar foi criado exatamente para transformar pessoas como você em máquinas de constância.",
+    diagnosis: "Você estuda… mas não mantém o ritmo. Não é falta de esforço — é falta de método.\nSeu cérebro está condicionado a buscar alívio rápido, não foco profundo.\nÉ por isso que técnicas comuns não funcionaram para você.\nAntes de estudar, você precisa ativar os gatilhos neurológicos que desbloqueiam foco automático.\nQuando isso ativa, estudar deixa de ser pesado — vira natural.",
     cta: "Quero ativar meu foco em 7 minutos (Acesso Imediato)",
   },
   "Focado, mas Bloqueado": {
@@ -86,7 +86,7 @@ export default function Home() {
         return (
           <Card className="w-full max-w-2xl text-center shadow-2xl shadow-primary/20 animate-fade-in sm:overflow-hidden sm:rounded-lg">
             <Image 
-              src="https://picsum.photos/seed/futurebrain/1200/630"
+              src="https://i.imgur.com/3sF4aiS.png"
               alt="Cérebro iluminado representando padrões de foco"
               width={1200}
               height={630}
