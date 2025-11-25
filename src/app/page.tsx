@@ -84,9 +84,9 @@ export default function Home() {
       case 'idle':
       default:
         return (
-          <Card className="w-full max-w-2xl text-center shadow-2xl shadow-primary/20 animate-fade-in sm:overflow-hidden">
+          <Card className="w-full max-w-2xl text-center shadow-2xl shadow-primary/20 animate-fade-in sm:overflow-hidden sm:rounded-lg">
             <Image 
-              src="https://i.imgur.com/o5te7kh.png"
+              src="https://i.imgur.com/3sF4aiS.png"
               alt="Capa do Quiz Viciado em Estudar"
               width={1200}
               height={630}
@@ -97,12 +97,12 @@ export default function Home() {
                  <BrainCircuit className="w-8 h-8 sm:w-12 sm:h-12 text-primary" />
               </div>
               <CardTitle className="text-2xl sm:text-3xl font-extrabold">Descubra Seu Perfil de Estudante</CardTitle>
-              <CardDescription className="text-base text-muted-foreground pt-2 leading-relaxed">
+              <CardDescription className="text-base text-muted-foreground pt-2 leading-relaxed max-w-prose mx-auto">
                 90% dos estudantes travam o foco por padrões ocultos no cérebro — descubra em qual deles você caiu em menos de 60 segundos.
               </CardDescription>
             </CardHeader>
             <CardContent className="p-6 pt-0">
-              <Button size="lg" onClick={handleStartQuiz} className="w-full text-base font-bold">
+              <Button size="lg" onClick={handleStartQuiz} className="w-full text-base font-bold sm:w-auto sm:px-12">
                 Começar Meu Diagnóstico Agora
               </Button>
                <p className="text-xs text-muted-foreground mt-3">Leva menos de 1 minuto.</p>
