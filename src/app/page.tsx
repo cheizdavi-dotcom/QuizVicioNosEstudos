@@ -18,41 +18,41 @@ export type ResultProfile = {
 
 const resultProfiles: Record<string, ResultProfile> = {
   "O Disperso": {
-    title: "Seu sabotador invisível é: O Disperso",
+    title: "Seu padrão cerebral é o do Foco Desregulado",
     diagnosis: [
-        "Sua disciplina não é fraca — seu sistema de foco está desregulado. Você depende de picos de dopamina para agir, e por isso tarefas que não geram recompensa imediata parecem impossíveis de começar ou sustentar.",
-        "Seu cérebro foi treinado para buscar distração, tornando o foco profundo uma tarefa exaustiva. Isso cria um ciclo de procrastinação e culpa.",
+        "**Insight:** Seu problema não é falta de disciplina, mas sim um cérebro treinado para buscar recompensas rápidas. Por isso, tarefas que exigem esforço sustentado parecem chatas e difíceis de começar.",
+        "Seu foco é constantemente “roubado” por pequenas explosões de dopamina (celular, notificações, vídeos curtos), criando um ciclo de distração e culpa.",
         "O Método Viciado em Estudar reajusta seu sistema dopaminérgico, ensinando seu cérebro a encontrar recompensa na própria execução. Isso torna a disciplina mais leve e o foco, automático."
     ],
     ponteParaSolucao: "",
     cta: "Quero Destravar Meu Foco",
   },
   "O Ansioso Acumulador": {
-    title: "Seu sabotador invisível é: O Ansioso Acumulador",
+    title: "Seu padrão cerebral é o do Foco Ansioso",
     diagnosis: [
-        "Sua mente está em modo de 'hiper-vigilância'. Você acumula tarefas, pensa em mil cenários e tenta fazer tudo ao mesmo tempo. O resultado é uma aceleração mental que leva à sobrecarga e, ironicamente, à paralisia.",
-        "Esse estado de alerta constante drena sua energia antes mesmo de você começar a tarefa principal, fazendo com que a produtividade se torne um caos.",
-        "Para resolver isso, o Método Viciado em Estudar aplica um protocolo de desaceleração que acalma o sistema nervoso, organiza a mente e direciona sua energia para uma única tarefa por vez, restaurando a clareza e a execução."
+        "**Insight:** Sua mente não trava por fraqueza, mas por excesso de alerta. A necessidade de que tudo seja 'perfeito' te impede de começar, criando um bloqueio onde o medo de errar é maior que a vontade de avançar.",
+        "Você acumula tarefas, pensa em mil cenários e tenta fazer tudo ao mesmo tempo. O resultado é uma aceleração mental que leva à sobrecarga e, ironicamente, à paralisia.",
+        "O Método Viciado em Estudar aplica um protocolo de desaceleração que acalma o sistema nervoso, organiza a mente e direciona sua energia para uma única tarefa por vez, restaurando a clareza e a execução."
     ],
     ponteParaSolucao: "",
     cta: "Quero Destravar Meu Foco",
   },
   "O Exausto Mental": {
-    title: "Seu sabotador invisível é: O Exausto Mental",
+    title: "Seu padrão cerebral é o da Exaustão Neural",
     diagnosis: [
-        "Seu problema não é falta de vontade, mas sim fadiga neural. Sua 'bateria' mental está constantemente baixa, fazendo com que qualquer tarefa pareça monumental. A procrastinação, nesse caso, é um sintoma de exaustão.",
-        "Seu cérebro está tentando economizar energia, e por isso evita atividades que demandam esforço cognitivo sustentado, mesmo que você saiba que são importantes.",
-        "O Método Viciado em Estudar foi desenhado para recuperar sua energia mental com um sistema de 'rotina leve'. Ele reativa seus neurotransmissores de foco e disposição, permitindo que você retome o controle sem precisar de 'força de vontade'."
+        "**Insight:** Sua mente não está preguiçosa; ela está sem combustível. Sua 'bateria' mental está constantemente baixa, fazendo com que qualquer tarefa que exija concentração pareça monumental.",
+        "A procrastinação, nesse caso, é um sintoma de exaustão. Seu cérebro está tentando economizar energia e, por isso, evita atividades que demandam esforço cognitivo, mesmo que você saiba que são importantes.",
+        "O Método Viciado em Estudar foi desenhado para recuperar sua energia mental com um sistema de 'rotina leve', que reativa seus neurotransmissores de foco e disposição, permitindo que você retome o controle sem depender de 'força de vontade'."
     ],
     ponteParaSolucao: "",
     cta: "Quero Destravar Meu Foco",
   },
   "O Travado Perfeccionista": {
-    title: "Seu sabotador invisível é: O Travado Perfeccionista",
+    title: "Seu padrão cerebral é o do Foco Perfeccionista",
     diagnosis: [
-        "Você tem clareza sobre o que precisa ser feito, mas a necessidade de que tudo seja 'perfeito' te impede de começar. Esse padrão cria um bloqueio onde o medo de errar é maior que a vontade de avançar.",
+        "**Insight:** Você tem clareza sobre o que precisa ser feito, mas a necessidade de que tudo seja 'perfeito' te impede de começar. Esse padrão cria um bloqueio onde o medo de errar é maior que a vontade de avançar.",
         "Seu cérebro enxerga a tarefa como um grande desafio intimidador, em vez de uma série de pequenos passos. Isso leva ao adiamento constante, disfarçado de 'preparação'.",
-        "O Método Viciado em Estudar utiliza gatilhos comportamentais para quebrar o ciclo do perfeccionismo. Ele te ajuda a focar na consistência leve em vez da perfeição, tornando o progresso diário inevitável."
+        "O Método Viciado em Estudar utiliza gatilhos comportamentais para quebrar o ciclo do perfeccionismo. Ele te ajuda a focar na consistência em vez da perfeição, tornando o progresso diário inevitável."
     ],
     ponteParaSolucao: "",
     cta: "Quero Destravar Meu Foco",
@@ -138,9 +138,9 @@ export default function Home() {
               <div className="mx-auto bg-primary/10 p-3 rounded-full mb-4 border border-primary/20 shadow-lg shadow-primary/20">
                  <BrainCircuit className="w-8 h-8 text-primary" />
               </div>
-              <CardTitle className="text-2xl font-extrabold sm:text-3xl">Descubra o Sabotador Invisível Que Está Travando Sua Disciplina</CardTitle>
+              <CardTitle className="text-2xl font-extrabold sm:text-3xl">Descubra o Padrão Cerebral que Rouba seu Foco</CardTitle>
               <CardDescription className="text-sm text-muted-foreground pt-2 leading-relaxed max-w-prose mx-auto sm:text-base">
-                90% das pessoas travam o foco por padrões automáticos do cérebro — descubra qual está dominando você. Leva menos de 60 segundos.
+                Sua falta de disciplina pode ser um padrão mental invisível. Descubra qual é o seu em menos de 60 segundos.
               </CardDescription>
             </CardHeader>
             <CardContent className="p-6 pt-0">
