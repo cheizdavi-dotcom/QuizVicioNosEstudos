@@ -50,6 +50,16 @@ const IconExausto = (props: React.SVGProps<SVGSVGElement>) => (
     </svg>
 );
 
+const IconTravado = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg width="80" height="80" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <rect x="5" y="11" width="14" height="10" rx="2" stroke="currentColor" strokeWidth="1.5"/>
+    <path d="M8 11V7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7V11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+    <circle cx="12" cy="16" r="1" fill="currentColor"/>
+    <path d="M3 14H5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+    <path d="M19 14H21" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+  </svg>
+);
+
 
 const ResultIcon = ({ resultKey }: { resultKey: string }) => {
     const iconProps = {
@@ -64,13 +74,7 @@ const ResultIcon = ({ resultKey }: { resultKey: string }) => {
         case "O Exausto Mental":
             return <IconExausto {...iconProps} />;
         case "O Travado Perfeccionista":
-            return (
-                <svg {...iconProps} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" strokeWidth="1.5">
-                    <path d="M9.5 4.5C5.08 4.5 2.5 8.31 2.5 13.5C2.5 18.69 5.08 22.5 9.5 22.5C13.92 22.5 16.5 18.69 16.5 13.5C16.5 9.41 14.7 6.44 11.5 4.96" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"/>
-                    <path d="M14.5 19.5C18.92 19.5 21.5 15.69 21.5 10.5C21.5 5.31 18.92 1.5 14.5 1.5C10.08 1.5 7.5 5.31 7.5 10.5C7.5 14.59 9.3 17.56 12.5 19.04" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"/>
-                    <rect x="2" y="2" width="20" height="20" rx="4" stroke="currentColor" strokeWidth="1.5" strokeDasharray="3 3"/>
-                </svg>
-            );
+            return <IconTravado {...iconProps} />;
         default:
             return null;
     }
