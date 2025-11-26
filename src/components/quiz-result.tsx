@@ -86,7 +86,7 @@ export default function QuizResult({ result, resultKey, onRestart }: QuizResultP
       <CardFooter className="flex-col gap-4 p-6 sm:p-10 pt-6">
         <div className="w-full">
             <Button asChild size="lg" className="w-full h-14 text-base font-bold group text-black bg-gradient-to-b from-primary to-[#2eb312] hover:from-primary/90 hover:to-[#28a010] transition-all duration-300 ease-in-out hover:shadow-primary/60 shadow-lg shadow-primary/40 hover:-translate-y-0.5">
-              <a href="https://quiz.cakto.com.br/preview/viciado-em-estudar-WVehoO">
+              <a href="https://www.viciadonosestudos.site/">
                 {cta}
                 <MoveRight className="ml-2 transition-transform group-hover:translate-x-1" />
               </a>
