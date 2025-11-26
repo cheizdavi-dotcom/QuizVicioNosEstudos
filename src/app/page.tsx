@@ -12,82 +12,53 @@ import AnalyzingScreen from '@/components/analyzing-screen';
 export type ResultProfile = {
   title: string;
   diagnosis: string[];
-  pontoCritico: string;
-  acaoAcreditavel: string;
-  solucaoAcreditavel: string;
   ponteParaSolucao: string;
   cta: string;
 };
 
 const resultProfiles: Record<string, ResultProfile> = {
-  "Dopaminérgico Desregulado": {
-    title: "Seu padrão cerebral é: Dopaminérgico Desregulado",
+  "O Disperso": {
+    title: "Seu sabotador invisível é: O Disperso",
     diagnosis: [
-      "Você não é preguiçoso — seu cérebro apenas busca alívio imediato antes de buscar profundidade. Por isso você até começa, mas se distrai rápido, perde o ritmo e sente culpa depois.",
-      "Seu foco é roubado por pequenas explosões de dopamina (celular, notificações, vídeos curtos), que deixam tarefas longas mais difíceis do que deveriam ser.",
-      "Esse padrão cria:",
-      "• foco fragmentado",
-      "• procrastinação recorrente",
-      "• sensação de “sei o que preciso fazer, mas não faço”"
+        "Sua disciplina não é fraca — seu sistema de foco está desregulado. Você depende de picos de dopamina para agir, e por isso tarefas que não geram recompensa imediata parecem impossíveis de começar ou sustentar.",
+        "Seu cérebro foi treinado para buscar distração, tornando o foco profundo uma tarefa exaustiva. Isso cria um ciclo de procrastinação e culpa.",
+        "O Método Viciado em Estudar reajusta seu sistema dopaminérgico, ensinando seu cérebro a encontrar recompensa na própria execução. Isso torna a disciplina mais leve e o foco, automático."
     ],
-    pontoCritico: "",
-    acaoAcreditavel: "",
-    ponteParaSolucao: "Para destravar esse padrão, você precisa ensinar seu cérebro a gerar dopamina de forma estável, e não em picos. É exatamente isso que o Método Viciado em Estudar faz — reorganizando seus gatilhos de foco em poucos dias.",
-    solucaoAcreditavel: "",
-    cta: "Quero Destravar Meu Padrão",
+    ponteParaSolucao: "",
+    cta: "Quero Destravar Meu Foco",
   },
-  "Ansioso Vigilante": {
-    title: "Seu padrão cerebral é: Ansioso Vigilante",
+  "O Ansioso Acumulador": {
+    title: "Seu sabotador invisível é: O Ansioso Acumulador",
     diagnosis: [
-      "Sua mente não trava porque é fraca — ela trava porque está em alerta demais.",
-      "Você pensa antes de agir, se cobra antes de começar, e revisa mentalmente cada passo antes mesmo de dar o primeiro. Isso drena sua energia e bloqueia seu foco.",
-      "Sintomas desse padrão:",
-      "• medo de errar antes de tentar",
-      "• dificuldade em iniciar tarefas",
-      "• autocobrança excessiva",
-      "• sensação de que “nunca está bom o suficiente”"
+        "Sua mente está em modo de 'hiper-vigilância'. Você acumula tarefas, pensa em mil cenários e tenta fazer tudo ao mesmo tempo. O resultado é uma aceleração mental que leva à sobrecarga e, ironicamente, à paralisia.",
+        "Esse estado de alerta constante drena sua energia antes mesmo de você começar a tarefa principal, fazendo com que a produtividade se torne um caos.",
+        "Para resolver isso, o Método Viciado em Estudar aplica um protocolo de desaceleração que acalma o sistema nervoso, organiza a mente e direciona sua energia para uma única tarefa por vez, restaurando a clareza e a execução."
     ],
-    pontoCritico: "",
-    acaoAcreditavel: "",
-    ponteParaSolucao: "Para voltar ao modo foco, você precisa tirar seu cérebro do modo ameaça. O Método Viciado em Estudar faz isso reorganizando seu sistema de atenção para que a ação volte a ser leve, fluida e natural.",
-    solucaoAcreditavel: "",
-    cta: "Quero Destravar Meu Padrão",
+    ponteParaSolucao: "",
+    cta: "Quero Destravar Meu Foco",
   },
-  "Exaustão Neural": {
-    title: "Seu padrão cerebral é: Exaustão Neural",
+  "O Exausto Mental": {
+    title: "Seu sabotador invisível é: O Exausto Mental",
     diagnosis: [
-      "Seu foco não desapareceu — ele só está sem combustível.",
-      "Sua mente vem acumulando fadiga mental por dias, meses ou até anos. Isso gera preguiça, falta de clareza e dificuldade em manter constância, mesmo quando você quer melhorar.",
-      "Sintomas comuns:",
-      "• sensação de cansaço mesmo após descanso",
-      "• falta de motivação",
-      "• foco pesado, arrastado",
-      "• dificuldade em manter uma rotina"
+        "Seu problema não é falta de vontade, mas sim fadiga neural. Sua 'bateria' mental está constantemente baixa, fazendo com que qualquer tarefa pareça monumental. A procrastinação, nesse caso, é um sintoma de exaustão.",
+        "Seu cérebro está tentando economizar energia, e por isso evita atividades que demandam esforço cognitivo sustentado, mesmo que você saiba que são importantes.",
+        "O Método Viciado em Estudar foi desenhado para recuperar sua energia mental com um sistema de 'rotina leve'. Ele reativa seus neurotransmissores de foco e disposição, permitindo que você retome o controle sem precisar de 'força de vontade'."
     ],
-    pontoCritico: "",
-    acaoAcreditavel: "",
-    ponteParaSolucao: "Você não precisa de força de vontade — precisa reativar seu sistema de energia mental. O Método Viciado em Estudar faz isso em microciclos de 7 minutos, que reconstroem sua energia neural e destravam seu foco.",
-    solucaoAcreditavel: "",
-cta: "Quero Destravar Meu Padrão",
+    ponteParaSolucao: "",
+    cta: "Quero Destravar Meu Foco",
   },
-  "Sobrecarga Multitarefa": {
-    title: "Seu padrão cerebral é: Sobrecarga Multitarefa",
+  "O Travado Perfeccionista": {
+    title: "Seu sabotador invisível é: O Travado Perfeccionista",
     diagnosis: [
-      "Seu cérebro não está lento — ele está sobrecarregado.",
-      "Você vive tentando fazer muitas coisas ao mesmo tempo, e isso fragmenta seu foco, aumenta o cortisol e faz sua produtividade despencar.",
-      "Sintomas desse padrão:",
-      "• mente acelerada",
-      "• listas enormes e pouco resultado",
-      "• sensação de caos e desorganização",
-      "• foco que não se fixa em nada por muito tempo"
+        "Você tem clareza sobre o que precisa ser feito, mas a necessidade de que tudo seja 'perfeito' te impede de começar. Esse padrão cria um bloqueio onde o medo de errar é maior que a vontade de avançar.",
+        "Seu cérebro enxerga a tarefa como um grande desafio intimidador, em vez de uma série de pequenos passos. Isso leva ao adiamento constante, disfarçado de 'preparação'.",
+        "O Método Viciado em Estudar utiliza gatilhos comportamentais para quebrar o ciclo do perfeccionismo. Ele te ajuda a focar na consistência leve em vez da perfeição, tornando o progresso diário inevitável."
     ],
-    pontoCritico: "",
-    acaoAcreditavel: "",
-    ponteParaSolucao: "O Método Viciado em Estudar reduz até 80% da dispersão em poucos dias, ensinando seu cérebro a entrar em foco profundo e priorizar o que realmente importa.",
-    solucaoAcreditavel: "",
-    cta: "Quero Destravar Meu Padrão",
+    ponteParaSolucao: "",
+    cta: "Quero Destravar Meu Foco",
   },
 };
+
 
 export default function Home() {
   const [quizState, setQuizState] = useState<'idle' | 'in-progress' | 'analyzing' | 'completed'>('idle');
@@ -99,20 +70,39 @@ export default function Home() {
   };
 
   const handleQuizCompletion = (answerIndexes: number[]) => {
-    const totalScore = answerIndexes.reduce((sum, index) => sum + (index + 1), 0);
-    
-    let profileKey: string;
-    if (totalScore >= 5 && totalScore <= 7) {
-      profileKey = "Ansioso Vigilante";
-    } else if (totalScore >= 8 && totalScore <= 11) {
-      profileKey = "Dopaminérgico Desregulado";
-    } else if (totalScore >= 12 && totalScore <= 15) {
-      profileKey = "Exaustão Neural";
-    } else { // 16-20
-      profileKey = "Sobrecarga Multitarefa";
-    }
+    const counts: Record<string, number> = {
+      "O Disperso": 0,
+      "O Ansioso Acumulador": 0,
+      "O Exausto Mental": 0,
+      "O Travado Perfeccionista": 0,
+    };
 
-    setResult(resultProfiles[profileKey]);
+    const answerToProfileMap = [
+      ["O Disperso", "O Travado Perfeccionista", "O Disperso", "O Travado Perfeccionista"], // Q1
+      ["O Ansioso Acumulador", "O Exausto Mental", "O Travado Perfeccionista", "O Disperso"], // Q2
+      ["O Travado Perfeccionista", "O Disperso", "O Ansioso Acumulador", "O Exausto Mental"], // Q3
+      ["O Ansioso Acumulador", "O Exausto Mental", "O Disperso", "O Travado Perfeccionista"], // Q4
+      ["O Disperso", "O Ansioso Acumulador", "O Exausto Mental", "O Travado Perfeccionista"], // Q5
+    ];
+
+    answerIndexes.forEach((answerIndex, questionIndex) => {
+      const profile = answerToProfileMap[questionIndex][answerIndex];
+      if (profile) {
+        counts[profile]++;
+      }
+    });
+
+    let maxCount = 0;
+    let finalProfileKey = "O Disperso"; // Default profile
+
+    for (const profile in counts) {
+      if (counts[profile] > maxCount) {
+        maxCount = counts[profile];
+        finalProfileKey = profile;
+      }
+    }
+    
+    setResult(resultProfiles[finalProfileKey]);
     setQuizState('analyzing');
 
     setTimeout(() => {
@@ -148,16 +138,15 @@ export default function Home() {
               <div className="mx-auto bg-primary/10 p-3 rounded-full mb-4 border border-primary/20 shadow-lg shadow-primary/20">
                  <BrainCircuit className="w-8 h-8 text-primary" />
               </div>
-              <CardTitle className="text-2xl font-extrabold sm:text-3xl">Descubra o Padrão Cerebral Que Está Travando Seu Foco</CardTitle>
+              <CardTitle className="text-2xl font-extrabold sm:text-3xl">Descubra o Sabotador Invisível Que Está Travando Sua Disciplina</CardTitle>
               <CardDescription className="text-sm text-muted-foreground pt-2 leading-relaxed max-w-prose mx-auto sm:text-base">
-                90% das pessoas perdem o foco por padrões invisíveis no cérebro — descubra qual está segurando você em menos de 60 segundos.
+                90% das pessoas travam o foco por padrões automáticos do cérebro — descubra qual está dominando você. Leva menos de 60 segundos.
               </CardDescription>
             </CardHeader>
             <CardContent className="p-6 pt-0">
               <Button size="lg" onClick={handleStartQuiz} className="w-full font-bold sm:w-auto sm:px-12">
                 Iniciar Meu Diagnóstico
               </Button>
-               <p className="text-xs text-muted-foreground mt-3">+ de 42.000 diagnósticos realizados.</p>
             </CardContent>
           </Card>
         );
