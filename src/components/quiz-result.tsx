@@ -65,7 +65,7 @@ export default function QuizResult({ result, resultKey, onRestart }: QuizResultP
           <ResultIcon className="w-16 h-16 sm:w-20 sm:h-20 text-primary" />
         </div>
         <p className="text-sm sm:text-base text-primary font-medium">Resultado encontrado!</p>
-        <h1 className="text-2xl sm:text-3xl font-bold mt-1 text-center text-foreground">
+        <h1 className="text-xl sm:text-3xl font-bold mt-1 text-center text-foreground">
          {title}
         </h1>
       </CardHeader>
@@ -86,7 +86,7 @@ export default function QuizResult({ result, resultKey, onRestart }: QuizResultP
       <CardFooter className="flex-col gap-4 p-6 sm:p-10 pt-6">
         <div className="w-full">
             <Button asChild size="lg" className="w-full h-14 text-base font-bold group text-black bg-gradient-to-b from-primary to-[#2eb312] hover:from-primary/90 hover:to-[#28a010] transition-all duration-300 ease-in-out hover:shadow-primary/60 shadow-lg shadow-primary/40 hover:-translate-y-0.5">
-              <a href="https://www.viciadonosestudos.site/">
+              <a href="https://www.viciadonosestudos.site/" target="_blank" rel="noopener noreferrer">
                 {cta}
                 <MoveRight className="ml-2 transition-transform group-hover:translate-x-1" />
               </a>

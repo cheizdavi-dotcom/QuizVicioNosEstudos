@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { quizQuestions } from '@/lib/quiz-data';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -17,9 +17,6 @@ export default function Quiz({ onComplete }: QuizProps) {
   const [progress, setProgress] = useState(0);
   const [isAnimatingOut, setIsAnimatingOut] = useState(false);
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
-  const [showContinue, setShowContinue] = useState(false);
-
-  const advanceTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     setProgress(((currentQuestionIndex) / quizQuestions.length) * 100);
@@ -27,16 +24,11 @@ export default function Quiz({ onComplete }: QuizProps) {
 
   const advanceToNext = (newAnswerIndexes: number[]) => {
       if (currentQuestionIndex < quizQuestions.length - 1) {
-        setCurrentQuestionIndex(currentQuestionIndex + 1);
-        setSelectedAnswer(null);
+        setCurrentQuestionIndex(prevIndex => prevIndex + 1);
+        setSelectedAnswer(null); // Reset selection
         setIsAnimatingOut(false);
-        setShowContinue(false);
       } else {
         onComplete(newAnswerIndexes);
-      }
-      if(advanceTimeoutRef.current) {
-        clearTimeout(advanceTimeoutRef.current);
-        advanceTimeoutRef.current = null;
       }
   };
 
@@ -77,11 +69,11 @@ export default function Quiz({ onComplete }: QuizProps) {
         <div className="grid grid-cols-1 gap-3">
           {currentQuestion.options.map((option, index) => (
             <Button
-              key={index}
+              key={`${currentQuestion.id}-${index}`} // Use a more stable key
               variant="outline"
               size="lg"
               className={cn(
-                "text-left justify-start h-auto py-3 whitespace-normal text-sm transition-colors duration-150",
+                "text-left justify-start h-auto py-3 whitespace-normal text-sm sm:text-base transition-colors duration-150",
                 selectedAnswer === index
                   ? 'bg-primary border-primary/50 text-primary-foreground'
                   : 'hover:bg-accent hover:text-accent-foreground'

@@ -153,7 +153,7 @@ export default function Home() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-4 bg-background bg-[radial-gradient(circle_at_center,rgba(57,255,20,0.05)_0%,transparent_70%)]">
+    <main className="flex min-h-screen flex-col items-center justify-center p-4 sm:p-6 bg-background bg-[radial-gradient(circle_at_center,rgba(57,255,20,0.05)_0%,transparent_70%)]">
       {renderContent()}
     </main>
   );
