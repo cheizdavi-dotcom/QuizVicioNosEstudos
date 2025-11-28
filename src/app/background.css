@@ -1,0 +1,34 @@
+
+.futuristic-background {
+  background-color: #0a0a0a;
+  background-image:
+    /* Camada de brilho suave no centro */
+    radial-gradient(circle at center, rgba(57, 255, 20, 0.1) 0%, transparent 40%),
+    
+    /* Linhas de circuito finas */
+    linear-gradient(rgba(57, 255, 20, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(57, 255, 20, 0.03) 1px, transparent 1px),
+
+    /* Grade neural sutil */
+    linear-gradient(rgba(57, 255, 20, 0.02) 0.5px, transparent 0.5px),
+    linear-gradient(90deg, rgba(57, 255, 20, 0.02) 0.5px, transparent 0.5px);
+  
+  background-size: 
+    100% 100%,
+    50px 50px,
+    50px 50px,
+    10px 10px,
+    10px 10px;
+    
+  background-position: center center, 0 0, 0 0, 0 0, 0 0;
+  animation: move-grid 200s linear infinite;
+}
+
+@keyframes move-grid {
+  0% {
+    background-position: center center, 0 0, 0 0, 0 0, 0 0;
+  }
+  100% {
+    background-position: center center, 1000px 1000px, -1000px -1000px, 500px 500px, -500px -500px;
+  }
+}

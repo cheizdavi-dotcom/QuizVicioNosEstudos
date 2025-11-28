@@ -121,7 +121,7 @@ export default function Home() {
       case 'idle':
       default:
         return (
-          <Card className="w-full max-w-2xl text-center shadow-2xl shadow-primary/20 animate-fade-in overflow-hidden rounded-lg border-primary/20">
+          <Card className="w-full max-w-2xl text-center shadow-2xl shadow-primary/20 animate-fade-in overflow-hidden rounded-lg border-primary/20 bg-card/80 backdrop-blur-sm">
             <Image 
               src="https://i.imgur.com/3sF4aiS.png"
               alt="Cérebro iluminado representando padrões de foco"
@@ -130,7 +130,7 @@ export default function Home() {
               className="w-full h-auto object-cover"
               data-ai-hint="futuristic brain neon"
             />
-            <CardHeader className="p-6">
+            <CardHeader className="p-6 sm:p-8">
               <div className="mx-auto bg-primary/10 p-3 rounded-full mb-4 border border-primary/20 shadow-lg shadow-primary/20">
                  <BrainCircuit className="w-8 h-8 text-primary" />
               </div>
@@ -139,8 +139,8 @@ export default function Home() {
                 90% das pessoas perdem o foco por padrões invisíveis no cérebro — descubra qual está segurando você em menos de 60 segundos.
               </CardDescription>
             </CardHeader>
-            <CardContent className="p-6 pt-0">
-              <Button size="lg" onClick={handleStartQuiz} className="w-full font-bold sm:w-auto sm:px-12">
+            <CardContent className="p-6 sm:p-8 pt-0">
+              <Button size="lg" onClick={handleStartQuiz} className="w-full font-bold text-base sm:w-auto sm:px-12">
                 Descobrir Meu Sabotador →
               </Button>
                <p className="text-xs text-muted-foreground mt-3">
@@ -153,7 +153,7 @@ export default function Home() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-4 sm:p-6 bg-background bg-[radial-gradient(circle_at_center,rgba(57,255,20,0.05)_0%,transparent_70%)]">
+    <main className="flex min-h-screen flex-col items-center justify-center p-4 sm:p-6 futuristic-background">
       {renderContent()}
     </main>
   );
