@@ -52,7 +52,7 @@ export default function Quiz({ onComplete }: QuizProps) {
 
   return (
     <Card className={cn(
-        "w-full max-w-2xl shadow-2xl shadow-primary/20 rounded-2xl border border-primary/30 bg-card/60 backdrop-blur-xl",
+        "w-full max-w-2xl shadow-2xl shadow-primary/20 rounded-2xl border border-primary/30 bg-card/60 backdrop-blur-xl backdrop-saturate-150",
         "animate-fade-in-up",
         isAnimatingOut && "animate-fade-out-up"
     )}>

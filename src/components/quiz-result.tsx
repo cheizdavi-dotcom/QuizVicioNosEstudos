@@ -56,7 +56,7 @@ export default function QuizResult({ result, resultKey, onRestart }: QuizResultP
   return (
     <Card className={cn(
         "w-full max-w-2xl animate-fade-in-up",
-        "bg-card/60 backdrop-blur-xl",
+        "bg-card/60 backdrop-blur-xl backdrop-saturate-150",
         "border border-primary/30 rounded-2xl",
         "shadow-2xl shadow-primary/20"
       )}>

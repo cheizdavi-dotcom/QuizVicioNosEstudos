@@ -121,7 +121,7 @@ export default function Home() {
       case 'idle':
       default:
         return (
-          <Card className="w-full max-w-2xl text-center shadow-2xl shadow-primary/20 animate-fade-in overflow-hidden rounded-2xl border border-primary/30 bg-card/60 backdrop-blur-xl">
+          <Card className="w-full max-w-2xl text-center shadow-2xl shadow-primary/20 animate-fade-in overflow-hidden rounded-2xl border border-primary/30 bg-card/60 backdrop-blur-xl backdrop-saturate-150">
             <Image 
               src="https://i.imgur.com/3sF4aiS.png"
               alt="Cérebro iluminado representando padrões de foco"

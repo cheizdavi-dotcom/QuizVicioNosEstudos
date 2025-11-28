@@ -13,7 +13,7 @@ export default function AnalyzingScreen() {
     }, []);
 
     return (
-        <Card className="w-full max-w-md text-center animate-fade-in shadow-2xl shadow-primary/20 rounded-2xl border border-primary/30 bg-card/60 backdrop-blur-xl">
+        <Card className="w-full max-w-md text-center animate-fade-in shadow-2xl shadow-primary/20 rounded-2xl border border-primary/30 bg-card/60 backdrop-blur-xl backdrop-saturate-150">
             <CardHeader className="p-6">
                 <CardTitle className="text-xl sm:text-2xl font-bold">Analisando seu perfil...</CardTitle>
             </CardHeader>
