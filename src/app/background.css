@@ -1,6 +1,6 @@
 
 .futuristic-background {
-  background: radial-gradient(circle at center, #0a1f0a 0%, #000000 100%);
+  background: radial-gradient(circle at 50% 0%, #112211 0%, #050505 60%, #000000 100%);
 }
 
 @keyframes move-grid {
