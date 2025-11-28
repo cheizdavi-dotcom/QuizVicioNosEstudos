@@ -121,7 +121,7 @@ export default function Home() {
       case 'idle':
       default:
         return (
-          <Card className="w-full max-w-2xl text-center shadow-2xl shadow-primary/20 animate-fade-in overflow-hidden rounded-lg border-primary/20 bg-card/80 backdrop-blur-sm">
+          <Card className="w-full max-w-2xl text-center shadow-2xl shadow-primary/20 animate-fade-in overflow-hidden rounded-2xl border border-primary/30 bg-card/60 backdrop-blur-xl">
             <Image 
               src="https://i.imgur.com/3sF4aiS.png"
               alt="Cérebro iluminado representando padrões de foco"
@@ -135,7 +135,7 @@ export default function Home() {
                  <BrainCircuit className="w-8 h-8 text-primary" />
               </div>
               <CardTitle className="text-2xl sm:text-3xl font-extrabold text-primary">Descubra o Padrão Cerebral Que Está Travando Seu Foco</CardTitle>
-              <CardDescription className="text-sm text-muted-foreground pt-2 leading-relaxed max-w-prose mx-auto sm:text-base">
+              <CardDescription className="text-sm sm:text-base text-muted-foreground pt-2 leading-relaxed max-w-prose mx-auto">
                 90% das pessoas perdem o foco por padrões invisíveis no cérebro — descubra qual está segurando você em menos de 60 segundos.
               </CardDescription>
             </CardHeader>

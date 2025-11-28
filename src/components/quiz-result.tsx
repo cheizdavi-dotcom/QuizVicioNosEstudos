@@ -56,9 +56,9 @@ export default function QuizResult({ result, resultKey, onRestart }: QuizResultP
   return (
     <Card className={cn(
         "w-full max-w-2xl animate-fade-in-up",
-        "bg-[rgba(255,255,255,0.03)] backdrop-blur-lg",
+        "bg-card/60 backdrop-blur-xl",
         "border border-primary/30 rounded-2xl",
-        "shadow-2xl shadow-primary/10 [box-shadow:0_0_20px_rgba(57,255,20,0.1),_inset_0_0_10px_rgba(57,255,20,0.05)]"
+        "shadow-2xl shadow-primary/20"
       )}>
       <CardHeader className="items-center text-center p-6 sm:p-10">
         <div className="result-icon-container filter drop-shadow-[0_0_8px_rgba(57,255,20,0.6)] animate-scale-in mb-4 sm:mb-6">

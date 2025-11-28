@@ -52,7 +52,7 @@ export default function Quiz({ onComplete }: QuizProps) {
 
   return (
     <Card className={cn(
-        "w-full max-w-2xl shadow-2xl shadow-primary/10",
+        "w-full max-w-2xl shadow-2xl shadow-primary/20 rounded-2xl border border-primary/30 bg-card/60 backdrop-blur-xl",
         "animate-fade-in-up",
         isAnimatingOut && "animate-fade-out-up"
     )}>
@@ -61,7 +61,7 @@ export default function Quiz({ onComplete }: QuizProps) {
         <p className="text-sm font-medium text-primary mb-2">
           Pergunta {currentQuestionIndex + 1} de {quizQuestions.length}
         </p>
-        <CardTitle className="text-lg font-bold leading-tight sm:text-2xl">
+        <CardTitle className="text-lg sm:text-xl font-bold leading-tight md:text-2xl">
           {currentQuestion.question}
         </CardTitle>
       </CardHeader>
@@ -73,10 +73,10 @@ export default function Quiz({ onComplete }: QuizProps) {
               variant="outline"
               size="lg"
               className={cn(
-                "text-left justify-start h-auto py-3 whitespace-normal text-sm sm:text-base transition-colors duration-150",
+                "text-left justify-start h-auto py-3 whitespace-normal text-sm sm:text-base transition-all duration-200 border-primary/20 hover:border-primary/50",
                 selectedAnswer === index
                   ? 'bg-primary border-primary/50 text-primary-foreground'
-                  : 'hover:bg-accent hover:text-accent-foreground'
+                  : 'bg-primary/5 hover:bg-primary/10'
               )}
               onClick={() => handleAnswer(index)}
               disabled={selectedAnswer !== null}
