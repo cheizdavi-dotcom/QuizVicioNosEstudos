@@ -27,7 +27,6 @@ const STEP_LABELS: Record<string, string> = {
   answer_question_2: 'Respondeu Pergunta 2',
   answer_question_3: 'Respondeu Pergunta 3',
   answer_question_4: 'Respondeu Pergunta 4',
-  answer_question_5: 'Respondeu Pergunta 5',
   view_results_page: 'Viu a Página de Resultados',
   click_cta: 'Clicou no CTA Final',
 };
@@ -82,35 +81,54 @@ function FunnelDashboard() {
       return acc;
     }, {} as Record<string, Set<string>>);
     
-    // Conta quantas sessões passaram por cada etapa do funil
-    // Uma sessão passa por uma etapa se ela completou essa etapa E todas as anteriores
+    // Conta quantas sessões ÚNICAS existem em cada etapa do funil.
+    // Isso é mais robusto do que a lógica anterior.
     const stepCounts = FUNNEL_STEPS.map(step => {
-        let count = 0;
-        const stepIndex = FUNNEL_STEPS.indexOf(step);
-
+        let uniqueSessionCount = 0;
+        
         // Itera sobre cada sessão
-        Object.values(sessions).forEach(completedSteps => {
-            // Verifica se a sessão completou todas as etapas ATÉ a etapa atual
-            let passed = true;
-            for (let i = 0; i <= stepIndex; i++) {
-                if (!completedSteps.has(FUNNEL_STEPS[i])) {
-                    passed = false;
-                    break;
-                }
+        for (const sessionId in sessions) {
+            const completedSteps = sessions[sessionId];
+            if (completedSteps.has(step)) {
+                uniqueSessionCount++;
             }
-            if (passed) {
-                count++;
-            }
-        });
+        }
         
         return {
             name: STEP_LABELS[step] || step,
-            value: count,
+            value: uniqueSessionCount,
         };
     });
 
+    // Agora, para criar o efeito de "funil" onde os números são cumulativos e decrescentes,
+    // garantimos que uma sessão só conta para uma etapa se tiver passado por todas as anteriores.
+    const cumulativeStepCounts = FUNNEL_STEPS.map((step, stepIndex) => {
+      let count = 0;
+
+      // Itera sobre cada sessão
+      Object.values(sessions).forEach(completedSteps => {
+          // Verifica se a sessão completou todas as etapas ATÉ a etapa atual (inclusive)
+          let passedAllPreviousSteps = true;
+          for (let i = 0; i <= stepIndex; i++) {
+              if (!completedSteps.has(FUNNEL_STEPS[i])) {
+                  passedAllPreviousSteps = false;
+                  break;
+              }
+          }
+          if (passedAllPreviousSteps) {
+              count++;
+          }
+      });
+      
+      return {
+          name: STEP_LABELS[step] || step,
+          value: count,
+      };
+    });
+
+
     // Filtra etapas que não têm dados para não poluir o gráfico
-    return stepCounts.filter(d => d.value > 0);
+    return cumulativeStepCounts.filter(d => d.value > 0);
 
   }, [funnelData]);
 
@@ -156,8 +174,11 @@ function FunnelDashboard() {
           ) : processedData.length > 0 ? (
             <FunnelChart data={processedData} />
           ) : (
-            <div className="w-full h-96 flex items-center justify-center text-center">
-                <p className="text-muted-foreground">Ainda não há dados de funil para exibir.<br/>Tente interagir com o quiz para gerar dados.</p>
+            <div className="w-full h-96 flex flex-col items-center justify-center text-center gap-4">
+                <p className="text-muted-foreground">Ainda não há dados de funil para exibir.</p>
+                <Link href="/" className="text-sm text-primary hover:underline bg-primary/10 px-4 py-2 rounded-md border border-primary/20">
+                    Clique aqui para fazer o quiz e gerar dados
+                </Link>
             </div>
           )}
         </CardContent>
@@ -184,3 +205,5 @@ export default function DashboardPage() {
         </QueryClientProvider>
     )
 }
+
+    
