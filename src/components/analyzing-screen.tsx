@@ -19,7 +19,7 @@ export default function AnalyzingScreen() {
             </CardHeader>
             <CardContent className="p-6 pt-0 space-y-4">
                  <p className="text-muted-foreground text-sm sm:text-base">Carregando suas métricas de foco...</p>
-                 <Progress value={progress} className="w-full h-2 transition-all duration-[2000ms] ease-in-out" />
+                 <Progress value={progress} className="w-full h-2 transition-all duration-2000 ease-in-out" />
             </CardContent>
         </Card>
     )
