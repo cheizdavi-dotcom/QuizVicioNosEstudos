@@ -84,7 +84,7 @@ const resultConfig = {
     testimonial: {
       text: "Eu era exatamente assim. Não conseguia ficar 10 minutos estudando sem pegar o celular. O Método ajudou a regular minha dopamina e hoje estudo 3 horas seguidas.",
       author: "João S., estudante de concurso",
-      avatarUrl: "https://picsum.photos/seed/joao/100/100"
+      avatarUrl: "https://picsum.photos/seed/student/100/100"
     }
   },
   "O Ansioso Acumulador": {
