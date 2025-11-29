@@ -27,6 +27,7 @@ const STEP_LABELS: Record<string, string> = {
   answer_question_2: 'Respondeu Pergunta 2',
   answer_question_3: 'Respondeu Pergunta 3',
   answer_question_4: 'Respondeu Pergunta 4',
+  answer_question_5: 'Respondeu Pergunta 5',
   view_results_page: 'Viu a Página de Resultados',
   click_cta: 'Clicou no CTA Final',
 };
@@ -205,5 +206,3 @@ export default function DashboardPage() {
         </QueryClientProvider>
     )
 }
-
-    
