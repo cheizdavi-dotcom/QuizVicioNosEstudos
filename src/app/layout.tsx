@@ -3,6 +3,7 @@ import './globals.css';
 import './background.css';
 import { Toaster } from '@/components/ui/toaster';
 import Script from 'next/script';
+import { FB_PIXEL_ID } from '@/lib/fpixel';
 
 export const metadata: Metadata = {
   title: 'StudyFlow Quiz',
@@ -22,11 +23,8 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
       </head>
       <body className="font-body antialiased">
-        {children}
-        <Toaster />
-        
         {/* Facebook Pixel Script */}
-        <Script id="fb-pixel" strategy="afterInteractive">
+        <Script id="fb-pixel-base" strategy="afterInteractive">
           {`
             !function(f,b,e,v,n,t,s)
             {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -36,15 +34,18 @@ export default function RootLayout({
             t.src=v;s=b.getElementsByTagName(e)[0];
             s.parentNode.insertBefore(t,s)}(window, document,'script',
             'https://connect.facebook.net/en_US/fbevents.js');
-            fbq('init', '1490624315600068');
+            fbq('init', '${FB_PIXEL_ID}');
             fbq('track', 'PageView');
           `}
         </Script>
         <noscript>
           <img height="1" width="1" style={{display:'none'}}
-               src="https://www.facebook.com/tr?id=1490624315600068&ev=PageView&noscript=1"
+               src="https://www.facebook.com/tr?id=${FB_PIXEL_ID}&ev=PageView&noscript=1"
           />
         </noscript>
+        
+        {children}
+        <Toaster />
       </body>
     </html>
   );

@@ -7,6 +7,7 @@ import { MoveRight, MessageSquareQuote } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import React from 'react';
 import Image from 'next/image';
+import * as fpixel from '@/lib/fpixel';
 
 // --- Ícones SVG embutidos ---
 
@@ -120,6 +121,13 @@ export default function QuizResult({ result, resultKey, onRestart }: QuizResultP
   const ResultIcon = config.icon;
   const testimonial = config.testimonial;
 
+  const handleCtaClick = () => {
+    fpixel.event('Lead', {
+      content_name: resultKey, // Passa o perfil do usuário como info
+    });
+    window.open("https://www.viciadonosestudos.site/", "_blank", "noopener,noreferrer");
+  };
+
   return (
     <Card className={cn(
         "w-full max-w-2xl animate-fade-in-up",
@@ -185,11 +193,9 @@ export default function QuizResult({ result, resultKey, onRestart }: QuizResultP
       </CardContent>
       <CardFooter className="flex-col gap-4 p-6 sm:p-10 pt-8">
         <div className="w-full">
-            <Button asChild size="lg" className="w-full h-16 text-lg font-bold group text-black bg-gradient-to-b from-primary to-[#2eb312] hover:from-primary/90 hover:to-[#28a010] transition-all duration-300 ease-in-out hover:shadow-primary/60 shadow-lg shadow-primary/40 hover:-translate-y-1 tracking-wider uppercase">
-              <a href="https://www.viciadonosestudos.site/" target="_blank" rel="noopener noreferrer">
+            <Button size="lg" className="w-full h-16 text-lg font-bold group text-black bg-gradient-to-b from-primary to-[#2eb312] hover:from-primary/90 hover:to-[#28a010] transition-all duration-300 ease-in-out hover:shadow-primary/60 shadow-lg shadow-primary/40 hover:-translate-y-1 tracking-wider uppercase" onClick={handleCtaClick}>
                 {cta}
                 <MoveRight className="ml-2 transition-transform group-hover:translate-x-1" />
-              </a>
             </Button>
         </div>
         <Button variant="link" onClick={onRestart} className="mt-2 text-sm text-primary/80 hover:text-primary hover:no-underline underline-offset-4 decoration-from-font">Fazer o quiz novamente</Button>

@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { BrainCircuit } from 'lucide-react';
 import AnalyzingScreen from '@/components/analyzing-screen';
+import * as fpixel from '@/lib/fpixel';
 
 export type ResultProfile = {
   title: string;
@@ -61,6 +62,7 @@ export default function Home() {
   const [resultKey, setResultKey] = useState<string | null>(null);
 
   const handleStartQuiz = () => {
+    fpixel.event('InitiateCheckout'); // Evento para início do quiz
     setResultKey(null);
     setQuizState('in-progress');
   };
