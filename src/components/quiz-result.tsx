@@ -6,6 +6,7 @@ import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
 import { MoveRight, MessageSquareQuote } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import React from 'react';
+import Image from 'next/image';
 
 // --- Ícones SVG embutidos ---
 
@@ -82,28 +83,32 @@ const resultConfig = {
     icon: IconDisperso,
     testimonial: {
       text: "Eu era exatamente assim. Não conseguia ficar 10 minutos estudando sem pegar o celular. O Método ajudou a regular minha dopamina e hoje estudo 3 horas seguidas.",
-      author: "João S., estudante de concurso"
+      author: "João S., estudante de concurso",
+      avatarUrl: "https://picsum.photos/seed/joao/100/100"
     }
   },
   "O Ansioso Acumulador": {
     icon: IconAnsioso,
     testimonial: {
       text: "Minha cabeça não parava, tentava fazer tudo e travava de ansiedade. O Método me ensinou a focar em uma coisa só e a paz mental voltou.",
-      author: "Mariana L., universitária"
+      author: "Mariana L., universitária",
+      avatarUrl: "https://picsum.photos/seed/mariana/100/100"
     }
   },
   "O Exausto Mental": {
     icon: IconExausto,
     testimonial: {
       text: "Achava que era preguiça, mas era exaustão real. Eu estava sempre sem energia. As técnicas do Método recuperaram minha disposição.",
-      author: "Pedro C., vestibulando"
+      author: "Pedro C., vestibulando",
+      avatarUrl: "https://picsum.photos/seed/pedro/100/100"
     }
   },
   "O Travado Perfeccionista": {
     icon: IconTravado,
     testimonial: {
       text: "Eu tinha medo de errar e ficava só planejando, sem nunca agir. O Método destravou minha ação imediata e finalmente saí do lugar.",
-      author: "Ana B., empreendedora"
+      author: "Ana B., empreendedora",
+      avatarUrl: "https://picsum.photos/seed/ana/100/100"
     }
   },
 };
@@ -143,17 +148,30 @@ export default function QuizResult({ result, resultKey, onRestart }: QuizResultP
 
         {/* --- PROVA SOCIAL DINÂMICA --- */}
         <div className="bg-background/40 backdrop-blur-sm p-6 rounded-xl border border-primary/20 space-y-4 shadow-inner-strong">
-            <h3 className="font-semibold text-base sm:text-lg text-primary flex items-center justify-center gap-2">
+            <h3 className="font-semibold text-base sm:text-lg text-primary flex items-center justify-center gap-2 mb-6">
                <MessageSquareQuote className="w-5 h-5 text-primary"/> O que diz quem tem esse mesmo perfil:
             </h3>
-            <blockquote className="text-center">
-              <p className="text-sm sm:text-base italic text-foreground/80 leading-relaxed">
-                  "{testimonial.text}"
-              </p>
-              <footer className="mt-4 text-xs sm:text-sm font-bold text-right text-primary">
-                  — {testimonial.author}
-              </footer>
-            </blockquote>
+            <div className="flex flex-col sm:flex-row items-center gap-6 text-center sm:text-left">
+              <div className="relative shrink-0">
+                <Image 
+                  src={testimonial.avatarUrl} 
+                  alt={`Avatar de ${testimonial.author}`}
+                  width={100}
+                  height={100}
+                  className="rounded-full w-24 h-24 object-cover"
+                  data-ai-hint="person student"
+                />
+                <div className="absolute inset-0 rounded-full border-2 border-primary ring-2 ring-primary/50 ring-offset-2 ring-offset-background/80" />
+              </div>
+              <blockquote className="w-full">
+                <p className="text-sm sm:text-base italic text-foreground/80 leading-relaxed">
+                    "{testimonial.text}"
+                </p>
+                <footer className="mt-4 text-xs sm:text-sm font-bold text-right text-primary">
+                    — {testimonial.author}
+                </footer>
+              </blockquote>
+            </div>
         </div>
 
         {/* --- PONTE PARA SOLUÇÃO --- */}
