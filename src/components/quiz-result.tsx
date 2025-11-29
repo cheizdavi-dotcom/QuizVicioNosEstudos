@@ -100,7 +100,7 @@ const resultConfig = {
     testimonial: {
       text: "Achava que era preguiça, mas era exaustão real. Eu estava sempre sem energia. As técnicas do Método recuperaram minha disposição.",
       author: "Pedro C., vestibulando",
-      avatarUrl: "https://picsum.photos/seed/pedro/100/100"
+      avatarUrl: "https://i.imgur.com/Ic5RN5l.png"
     }
   },
   "O Travado Perfeccionista": {
