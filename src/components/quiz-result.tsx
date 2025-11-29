@@ -3,14 +3,14 @@
 import type { ResultProfile } from '@/app/page';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
-import { MoveRight } from 'lucide-react';
+import { MoveRight, MessageSquareQuote } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import React from 'react';
 
-// --- Ícones SVG embutidos como componentes React ---
+// --- Ícones SVG embutidos ---
 
 const IconDisperso = (props: React.SVGProps<SVGSVGElement>) => (
-  <svg width="80" height="80" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
     <path d="M12 2V6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
     <path d="M12 18V22" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
     <path d="M22 12H18" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
@@ -26,7 +26,7 @@ const IconDisperso = (props: React.SVGProps<SVGSVGElement>) => (
 );
 
 const IconAnsioso = (props: React.SVGProps<SVGSVGElement>) => (
-  <svg width="80" height="80" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
     <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
     <path d="M12 6V12L16 14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeJoin="round"/>
     <path d="M15.5 8.5C15.5 8.5 17 7 19 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
@@ -38,7 +38,7 @@ const IconAnsioso = (props: React.SVGProps<SVGSVGElement>) => (
 );
 
 const IconExausto = (props: React.SVGProps<SVGSVGElement>) => (
-    <svg width="80" height="80" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
         <path d="M3 7C3 5.89543 3.89543 5 5 5H17C18.1046 5 19 5.89543 19 7V17C19 18.1046 18.1046 19 17 19H5C3.89543 19 3 18.1046 3 17V7Z" stroke="currentColor" strokeWidth="1.5"/>
         <path d="M22 10V14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
         <rect x="6" y="8" width="4" height="8" rx="1" fill="currentColor" fillOpacity="0.5" stroke="currentColor"/>
@@ -47,7 +47,7 @@ const IconExausto = (props: React.SVGProps<SVGSVGElement>) => (
 );
 
 const IconTravado = (props: React.SVGProps<SVGSVGElement>) => (
-  <svg width="80" height="80" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
     <rect x="5" y="11" width="14" height="10" rx="2" stroke="currentColor" strokeWidth="1.5"/>
     <path d="M8 11V7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7V11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
     <circle cx="12" cy="16" r="1" fill="currentColor"/>
@@ -80,15 +80,31 @@ const HighlightedText = ({ text }: { text: string }) => {
 const resultConfig = {
   "O Disperso": {
     icon: IconDisperso,
+    testimonial: {
+      text: "Eu era exatamente assim. Não conseguia ficar 10 minutos estudando sem pegar o celular. O Método ajudou a regular minha dopamina e hoje estudo 3 horas seguidas.",
+      author: "João S., estudante de concurso"
+    }
   },
   "O Ansioso Acumulador": {
     icon: IconAnsioso,
+    testimonial: {
+      text: "Minha cabeça não parava, tentava fazer tudo e travava de ansiedade. O Método me ensinou a focar em uma coisa só e a paz mental voltou.",
+      author: "Mariana L., universitária"
+    }
   },
   "O Exausto Mental": {
     icon: IconExausto,
+    testimonial: {
+      text: "Achava que era preguiça, mas era exaustão real. Eu estava sempre sem energia. As técnicas do Método recuperaram minha disposição.",
+      author: "Pedro C., vestibulando"
+    }
   },
   "O Travado Perfeccionista": {
     icon: IconTravado,
+    testimonial: {
+      text: "Eu tinha medo de errar e ficava só planejando, sem nunca agir. O Método destravou minha ação imediata e finalmente saí do lugar.",
+      author: "Ana B., empreendedora"
+    }
   },
 };
 
@@ -97,6 +113,7 @@ export default function QuizResult({ result, resultKey, onRestart }: QuizResultP
   
   const config = resultConfig[resultKey as keyof typeof resultConfig] || resultConfig["O Disperso"];
   const ResultIcon = config.icon;
+  const testimonial = config.testimonial;
 
   return (
     <Card className={cn(
@@ -105,32 +122,52 @@ export default function QuizResult({ result, resultKey, onRestart }: QuizResultP
         "border border-primary/30 rounded-2xl",
         "shadow-2xl shadow-primary/20"
       )}>
-      <CardHeader className="items-center text-center p-6 sm:p-10">
-        <div className="result-icon-container filter drop-shadow-[0_0_8px_rgba(57,255,20,0.6)] animate-scale-in mb-4 sm:mb-6">
-          <ResultIcon className="w-16 h-16 sm:w-20 sm:h-20 text-primary" />
+      <CardHeader className="items-center text-center p-6 sm:p-10 pb-4">
+        <div className="result-icon-container filter drop-shadow-[0_0_15px_rgba(57,255,20,0.6)] animate-scale-in mb-4 sm:mb-6">
+          <ResultIcon className="w-24 h-24 sm:w-28 sm:h-28 text-primary" />
         </div>
-        <p className="text-sm sm:text-base text-primary font-medium">Resultado encontrado!</p>
-        <h1 className="text-xl sm:text-3xl font-bold mt-1 text-center text-foreground">
+        <p className="text-sm sm:text-base text-primary font-semibold tracking-wider uppercase">Resultado encontrado!</p>
+        <h1 className="text-2xl sm:text-4xl font-extrabold mt-1 text-center text-foreground">
          {title}
         </h1>
       </CardHeader>
-      <CardContent className="px-6 sm:px-10 space-y-4">
+      <CardContent className="px-6 sm:px-10 space-y-8">
         
-        <div className="space-y-3 text-left">
+        <div className="space-y-4 text-left text-base sm:text-lg text-muted-foreground leading-relaxed">
           {diagnosis.map((point, index) => (
-              <p key={index} className="text-muted-foreground text-sm sm:text-base leading-relaxed">
+              <p key={index}>
                   <HighlightedText text={point} />
               </p>
           ))}
-          <p className="text-muted-foreground text-sm sm:text-base leading-relaxed pt-2">
+        </div>
+
+        {/* --- PROVA SOCIAL DINÂMICA --- */}
+        <div className="bg-primary/5 p-5 rounded-xl border border-primary/20 space-y-4">
+            <h3 className="font-semibold text-base sm:text-lg text-foreground flex items-center justify-center gap-2">
+               <MessageSquareQuote className="w-5 h-5 text-primary"/> O que diz quem tem esse mesmo perfil:
+            </h3>
+            <blockquote className="text-center">
+              <p className="text-sm sm:text-base italic text-muted-foreground leading-relaxed">
+                  "{testimonial.text}"
+              </p>
+              <footer className="mt-4 text-xs sm:text-sm font-bold text-right text-primary/90">
+                  — {testimonial.author}
+              </footer>
+            </blockquote>
+        </div>
+
+        {/* --- PONTE PARA SOLUÇÃO --- */}
+        <div className="bg-primary/10 p-5 rounded-xl border-l-4 border-primary space-y-2">
+           <h3 className="font-bold text-base sm:text-lg text-foreground">A Solução Para o Seu Padrão</h3>
+           <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">
             <HighlightedText text={ponteParaSolucao} />
           </p>
         </div>
 
       </CardContent>
-      <CardFooter className="flex-col gap-4 p-6 sm:p-10 pt-6">
+      <CardFooter className="flex-col gap-4 p-6 sm:p-10 pt-8">
         <div className="w-full">
-            <Button asChild size="lg" className="w-full h-14 text-base font-bold group text-black bg-gradient-to-b from-primary to-[#2eb312] hover:from-primary/90 hover:to-[#28a010] transition-all duration-300 ease-in-out hover:shadow-primary/60 shadow-lg shadow-primary/40 hover:-translate-y-0.5">
+            <Button asChild size="lg" className="w-full h-16 text-lg font-bold group text-black bg-gradient-to-b from-primary to-[#2eb312] hover:from-primary/90 hover:to-[#28a010] transition-all duration-300 ease-in-out hover:shadow-primary/60 shadow-lg shadow-primary/40 hover:-translate-y-1 tracking-wider uppercase">
               <a href="https://www.viciadonosestudos.site/" target="_blank" rel="noopener noreferrer">
                 {cta}
                 <MoveRight className="ml-2 transition-transform group-hover:translate-x-1" />
