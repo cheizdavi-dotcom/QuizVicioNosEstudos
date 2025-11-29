@@ -1,0 +1,155 @@
+/**
+ * Core Philosophy: This ruleset enforces a strict user-ownership model for all user-generated data,
+ * while providing read-only access to public quiz content. The primary goal is to securely track
+ * user progress through a quiz funnel for analytics.
+ *
+ * Data Structure: User-specific data, such as quiz results and funnel step completions, is nested
+ * under a top-level `/users/{userId}` path. This path-based ownership is the cornerstone of the
+ * security model. Publicly accessible data like quiz definitions, questions, and answers are
+ * stored in separate top-level collections.
+ *
+ * Key Security Decisions:
+ * - User Data Isolation: Users can only read and write data within their own `/users/{userId}` data tree.
+ *   This prevents any user from accessing another user's quiz results or progress.
+ * - Public Content is Read-Only: Collections like `/quizzes`, `/questions`, etc., are considered
+ *   application content. They are readable by any authenticated user but cannot be modified by clients.
+ *   This assumes content is managed through a trusted admin SDK or the Firebase Console.
+ * - No User Listing: The rules do not allow for querying or listing the top-level `/users` collection,
+ *   protecting user privacy.
+ * - Denormalization for Authorization: The data model uses path-based security (`/users/{userId}/...`)
+ *   which is highly performant as it avoids extra database reads (`get()` calls) to check for ownership.
+ * - Structural Segregation: The separation of public content (`/quizzes`) from private user data
+ *   (`/users/{userId}/quizResults`) provides a clear and secure boundary, simplifying rules and client-side queries.
+ */
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper functions for reusable logic
+    /**
+     * isSignedIn
+     * Checks if the user is authenticated.
+     */
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    /**
+     * isOwner
+     * Checks if the authenticated user's UID matches the provided userId.
+     * This is the primary function for enforcing user ownership.
+     * @param userId The user ID to check against, typically from the document path.
+     */
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    /**
+     * isExistingOwner
+     * Checks for ownership on an existing document. Used for safe updates and deletes.
+     * @param userId The user ID to check against from the document path.
+     */
+    function isExistingOwner(userId) {
+      return isOwner(userId) && resource != null;
+    }
+
+    /**
+     * parentQuizResultExists
+     * Verifies that the parent quizResult document exists before allowing creation of a subcollection document.
+     * @param userId The ID of the user.
+     * @param quizResultId The ID of the parent quizResult document.
+     */
+    function parentQuizResultExists(userId, quizResultId) {
+      return exists(/databases/$(database)/documents/users/$(userId)/quizResults/$(quizResultId));
+    }
+
+    /**
+     * @description Defines the rules for the quizzes collection.
+     * @path /quizzes/{quizId}
+     * @allow (get) Any authenticated user can read a quiz definition. `auth.uid: 'user123', op: get`
+     * @deny (create) No client can create, update, or delete quizzes. `auth.uid: 'user123', op: create`
+     * @principle Public content is read-only for clients to ensure data integrity.
+     */
+    match /quizzes/{quizId} {
+      allow get, list: if isSignedIn();
+      allow create: if false;
+      allow update: if false;
+      allow delete: if false;
+    }
+
+    /**
+     * @description Defines the rules for the questions collection.
+     * @path /questions/{questionId}
+     * @allow (list) Any authenticated user can read all question definitions. `auth.uid: 'user123', op: list`
+     * @deny (update) No client can modify questions. `auth.uid: 'user123', op: update`
+     * @principle Public content is read-only for clients to ensure data integrity.
+     */
+    match /questions/{questionId} {
+      allow get, list: if isSignedIn();
+      allow create: if false;
+      allow update: if false;
+      allow delete: if false;
+    }
+
+    /**
+     * @description Defines the rules for the answers collection.
+     * @path /answers/{answerId}
+     * @allow (get) Any authenticated user can read answer definitions. `auth.uid: 'user123', op: get`
+     * @deny (delete) No client can delete answers. `auth.uid: 'user123', op: delete`
+     * @principle Public content is read-only for clients to ensure data integrity.
+     */
+    match /answers/{answerId} {
+      allow get, list: if isSignedIn();
+      allow create: if false;
+      allow update: if false;
+      allow delete: if false;
+    }
+    
+    /**
+     * @description Defines the rules for the funnel steps collection.
+     * @path /funnelSteps/{funnelStepId}
+     * @allow (list) Any authenticated user can read all funnel step definitions. `auth.uid: 'user123', op: list`
+     * @deny (create) No client can create new funnel steps. `auth.uid: 'user123', op: create`
+     * @principle Public content is read-only for clients to ensure data integrity.
+     */
+    match /funnelSteps/{funnelStepId} {
+      allow get, list: if isSignedIn();
+      allow create: if false;
+      allow update: if false;
+      allow delete: if false;
+    }
+
+    match /users/{userId} {
+      /**
+       * @description Rules for a user's quiz results.
+       * @path /users/{userId}/quizResults/{quizResultId}
+       * @allow (create) A user can create a quiz result for themselves. `auth.uid: 'user123', path: /users/user123/quizResults/abc, op: create`
+       * @deny (get) A user cannot read another user's quiz result. `auth.uid: 'user456', path: /users/user123/quizResults/abc, op: get`
+       * @principle Enforces strict data ownership based on the document path.
+       */
+      match /quizResults/{quizResultId} {
+        allow get: if isOwner(userId);
+        allow list: if isOwner(userId);
+        allow create: if isOwner(userId);
+        allow update: if isExistingOwner(userId);
+        allow delete: if isExistingOwner(userId);
+
+        /**
+         * @description Rules for tracking a user's completion of funnel steps.
+         * @path /users/{userId}/quizResults/{quizResultId}/funnelStepCompletions/{funnelStepCompletionId}
+         * @allow (create) A user can create a funnel step completion record for their own quiz result. `auth.uid: 'user123', path: /users/user123/quizResults/abc/funnelStepCompletions/xyz, op: create`
+         * @deny (create) A user cannot create a completion record for a non-existent quiz result. `auth.uid: 'user123', path: /users/user123/quizResults/fake_result/funnelStepCompletions/xyz, op: create`
+         * @deny (list) A user cannot list completions for another user's quiz. `auth.uid: 'user456', path: /users/user123/quizResults/abc/funnelStepCompletions, op: list`
+         * @principle Inherits ownership from the parent path and validates relational integrity.
+         */
+        match /funnelStepCompletions/{funnelStepCompletionId} {
+          allow get: if isOwner(userId);
+          allow list: if isOwner(userId);
+          allow create: if isOwner(userId) && parentQuizResultExists(userId, quizResultId);
+          allow update: if isExistingOwner(userId);
+          allow delete: if isExistingOwner(userId);
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,324 @@
+{
+  "entities": {
+    "Quiz": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Quiz",
+      "type": "object",
+      "description": "Represents a quiz with a set of questions and a result.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the Quiz entity."
+        },
+        "name": {
+          "type": "string",
+          "description": "The name or title of the quiz."
+        },
+        "description": {
+          "type": "string",
+          "description": "A brief explanation of the quiz's purpose."
+        },
+        "questionIds": {
+          "type": "array",
+          "description": "References to Questions. (Relationship: Quiz 1:N Question)",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "id",
+        "name"
+      ]
+    },
+    "Question": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Question",
+      "type": "object",
+      "description": "Represents a single question in a quiz.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the Question entity."
+        },
+        "quizId": {
+          "type": "string",
+          "description": "Reference to Quiz. (Relationship: Quiz 1:N Question)"
+        },
+        "text": {
+          "type": "string",
+          "description": "The text of the question."
+        },
+        "type": {
+          "type": "string",
+          "description": "The question type. Example: SITUATION, PROBLEM, IMPLICATION, NEED, DESIRE"
+        },
+        "answerIds": {
+          "type": "array",
+          "description": "References to Answers. (Relationship: Question 1:N Answer)",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "id",
+        "quizId",
+        "text"
+      ]
+    },
+    "Answer": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Answer",
+      "type": "object",
+      "description": "Represents a possible answer to a question in the quiz.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the Answer entity."
+        },
+        "questionId": {
+          "type": "string",
+          "description": "Reference to Question. (Relationship: Question 1:N Answer)"
+        },
+        "text": {
+          "type": "string",
+          "description": "The text of the answer option."
+        },
+        "score": {
+          "type": "number",
+          "description": "Score associated with the answer."
+        }
+      },
+      "required": [
+        "id",
+        "questionId",
+        "text"
+      ]
+    },
+    "QuizResult": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "QuizResult",
+      "type": "object",
+      "description": "Represents the result of a completed quiz for a user.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the QuizResult entity."
+        },
+        "quizId": {
+          "type": "string",
+          "description": "Reference to Quiz. (Relationship: Quiz 1:N QuizResult)"
+        },
+        "answerIds": {
+          "type": "array",
+          "description": "References to Answers. (Relationship: QuizResult 1:N Answer)",
+          "items": {
+            "type": "string"
+          }
+        },
+        "resultTitle": {
+          "type": "string",
+          "description": "Title of the result (e.g., 'Potencial Viciado em Estudar')."
+        },
+        "resultDescription": {
+          "type": "string",
+          "description": "Detailed description of the result."
+        },
+        "opportunityPhrase": {
+          "type": "string",
+          "description": "The 'opportunity' phrase in the result."
+        },
+        "ctaText": {
+          "type": "string",
+          "description": "The text for the call to action."
+        }
+      },
+      "required": [
+        "id",
+        "quizId",
+        "answerIds"
+      ]
+    },
+    "FunnelStep": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "FunnelStep",
+      "type": "object",
+      "description": "Represents a step in the quiz funnel.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the FunnelStep entity."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the funnel step (e.g., 'Question 1', 'Result')."
+        },
+        "quizId": {
+          "type": "string",
+          "description": "Reference to the quiz this step belongs to. (Relationship: Quiz 1:N FunnelStep)"
+        },
+        "stepOrder": {
+          "type": "number",
+          "description": "The order in which this step appears in the funnel."
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "quizId",
+        "stepOrder"
+      ]
+    },
+    "FunnelStepCompletion": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "FunnelStepCompletion",
+      "type": "object",
+      "description": "Tracks when a user completes a specific step in the quiz funnel.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the FunnelStepCompletion entity."
+        },
+        "funnelStepId": {
+          "type": "string",
+          "description": "Reference to the FunnelStep. (Relationship: FunnelStep 1:N FunnelStepCompletion)"
+        },
+        "quizResultId": {
+          "type": "string",
+          "description": "Reference to QuizResult. (Relationship: QuizResult 1:N FunnelStepCompletion)"
+        },
+        "completionTimestamp": {
+          "type": "string",
+          "description": "Timestamp of when the funnel step was completed.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "funnelStepId",
+        "quizResultId",
+        "completionTimestamp"
+      ]
+    }
+  },
+  "auth": {
+    "providers": [
+      "password",
+      "anonymous"
+    ]
+  },
+  "firestore": {
+    "structure": [
+      {
+        "path": "/quizzes/{quizId}",
+        "definition": {
+          "entityName": "Quiz",
+          "schema": {
+            "$ref": "#/backend/entities/Quiz"
+          },
+          "description": "Stores quiz definitions.",
+          "params": [
+            {
+              "name": "quizId",
+              "description": "The unique identifier of the quiz."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/quizResults/{quizResultId}",
+        "definition": {
+          "entityName": "QuizResult",
+          "schema": {
+            "$ref": "#/backend/entities/QuizResult"
+          },
+          "description": "Stores the results of quizzes taken by a specific user.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user."
+            },
+            {
+              "name": "quizResultId",
+              "description": "The unique identifier of the quiz result."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/quizResults/{quizResultId}/funnelStepCompletions/{funnelStepCompletionId}",
+        "definition": {
+          "entityName": "FunnelStepCompletion",
+          "schema": {
+            "$ref": "#/backend/entities/FunnelStepCompletion"
+          },
+          "description": "Tracks when a user completes a specific step in the quiz funnel.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user."
+            },
+            {
+              "name": "quizResultId",
+              "description": "The unique identifier of the quiz result."
+            },
+            {
+              "name": "funnelStepCompletionId",
+              "description": "The unique identifier of the funnel step completion."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/funnelSteps/{funnelStepId}",
+        "definition": {
+          "entityName": "FunnelStep",
+          "schema": {
+            "$ref": "#/backend/entities/FunnelStep"
+          },
+          "description": "Stores the definition of a funnel step.",
+          "params": [
+            {
+              "name": "funnelStepId",
+              "description": "The unique identifier of the funnel step."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/questions/{questionId}",
+        "definition": {
+          "entityName": "Question",
+          "schema": {
+            "$ref": "#/backend/entities/Question"
+          },
+          "description": "Stores question definitions.",
+          "params": [
+            {
+              "name": "questionId",
+              "description": "The unique identifier of the question."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/answers/{answerId}",
+        "definition": {
+          "entityName": "Answer",
+          "schema": {
+            "$ref": "#/backend/entities/Answer"
+          },
+          "description": "Stores answer definitions.",
+          "params": [
+            {
+              "name": "answerId",
+              "description": "The unique identifier of the answer."
+            }
+          ]
+        }
+      }
+    ],
+    "reasoning": "The Firestore structure is designed to support the StudyFlow Quiz application, focusing on analyzing user drop-off points within the quiz funnel. The structure prioritizes Authorization Independence and QAPs by strategically denormalizing data and segregating collections based on access requirements.\n\n*   **Quizzes Collection:** Stores the quiz definitions.\n*   **Users Collection:** Contains user-specific data, including quiz results and funnel step completions. Path-based ownership ensures that only the user can access their data.\n*   **FunnelStepCompletions Subcollection:** Tracks the completion of each funnel step by each user, enabling analysis of user behavior within the quiz flow. This is nested under the quiz results.\n\n**Authorization Independence and QAPs:**\n\nAuthorization Independence is achieved by using path-based ownership for user data (`/users/{userId}`). Security rules can directly check `request.auth.uid` against the `userId` path parameter, eliminating the need for `get()` calls to parent documents. All write operations are scoped to the user's own document.\n\nQAPs are supported through structural segregation. User-specific data is stored in the `/users/{userId}` collection, allowing secure list operations. Security rules can enforce that only the authenticated user can list documents within their path.\n\nThis design facilitates simple and robust security rules, as authorization checks are based on the document path and the authenticated user's ID, ensuring that users can only access their own data and that list operations are secure."
+  }
+}
