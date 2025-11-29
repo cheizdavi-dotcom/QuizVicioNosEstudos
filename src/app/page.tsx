@@ -160,9 +160,11 @@ export default function Home() {
               </p>
             </CardContent>
              <CardFooter className="flex-col p-4">
-              <Link href="/dashboard" className="text-xs text-muted-foreground hover:text-primary transition-colors">
-                Acessar Dashboard
-              </Link>
+              {process.env.NEXT_PUBLIC_SHOW_DASHBOARD === 'true' && (
+                <Link href="/dashboard" className="text-xs text-muted-foreground hover:text-primary transition-colors">
+                  Acessar Dashboard
+                </Link>
+              )}
             </CardFooter>
           </Card>
         );
