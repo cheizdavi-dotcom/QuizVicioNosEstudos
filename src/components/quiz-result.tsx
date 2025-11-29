@@ -8,6 +8,9 @@ import { cn } from '@/lib/utils';
 import React from 'react';
 import Image from 'next/image';
 import * as fpixel from '@/lib/fpixel';
+import { useFirebase, addDocumentNonBlocking, useUser } from '@/firebase';
+import { collection, serverTimestamp } from 'firebase/firestore';
+
 
 // --- Ícones SVG embutidos ---
 
@@ -63,7 +66,7 @@ interface QuizResultProps {
   result: ResultProfile;
   resultKey: string;
   onRestart: () => void;
-  trackFunnelStep: (step: string, data?: any) => void;
+  quizResultId: string | null;
 }
 
 const HighlightedText = ({ text }: { text: string }) => {
@@ -115,18 +118,31 @@ const resultConfig = {
   },
 };
 
-export default function QuizResult({ result, resultKey, onRestart, trackFunnelStep }: QuizResultProps) {
+export default function QuizResult({ result, resultKey, onRestart, quizResultId }: QuizResultProps) {
   const { title, diagnosis, ponteParaSolucao, cta } = result;
   
   const config = resultConfig[resultKey as keyof typeof resultConfig] || resultConfig["O Disperso"];
   const ResultIcon = config.icon;
   const testimonial = config.testimonial;
+  const { firestore } = useFirebase();
+  const { user } = useUser();
 
   const handleCtaClick = () => {
     fpixel.event('Lead', {
       content_name: resultKey,
     });
-    trackFunnelStep('click_cta', { cta_text: cta, result_key: resultKey });
+    
+    if (user && quizResultId && firestore) {
+      const funnelStepRef = collection(firestore, `users/${user.uid}/quizResults/${quizResultId}/funnelStepCompletions`);
+      addDocumentNonBlocking(funnelStepRef, {
+        step: 'click_cta',
+        quizResultId: quizResultId,
+        cta_text: cta, 
+        result_key: resultKey,
+        completedAt: serverTimestamp(),
+      });
+    }
+
     window.open("https://www.viciadonosestudos.site/", "_blank", "noopener,noreferrer");
   };
 

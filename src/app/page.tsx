@@ -2,10 +2,11 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import Quiz from '@/components/quiz';
 import QuizResult from '@/components/quiz-result';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { BrainCircuit } from 'lucide-react';
 import AnalyzingScreen from '@/components/analyzing-screen';
 import * as fpixel from '@/lib/fpixel';
@@ -67,80 +68,49 @@ export default function Home() {
   const { firestore, auth } = useFirebase();
 
   useEffect(() => {
-    if (!isUserLoading && !user) {
+    if (!isUserLoading && !user && auth) {
       initiateAnonymousSignIn(auth);
     }
   }, [isUserLoading, user, auth]);
 
-  const trackFunnelStep = (step: string, a: any = {}) => {
-    if (user && quizResultId) {
-      const funnelStepRef = collection(firestore, `users/${user.uid}/quizResults/${quizResultId}/funnelStepCompletions`);
-      addDocumentNonBlocking(funnelStepRef, {
-        step,
-        ...a,
-        completedAt: serverTimestamp(),
-      });
-    }
-  };
-
   const handleStartQuiz = async () => {
-    if (!user) return;
+    if (!user || !firestore) return;
     fpixel.event('InitiateCheckout');
     setResultKey(null);
 
     const quizResultsRef = collection(firestore, `users/${user.uid}/quizResults`);
-    const newDoc = await addDocumentNonBlocking(quizResultsRef, {
+    
+    // Create a new document and get its ID
+    const newDocRef = await addDocumentNonBlocking(quizResultsRef, {
       startedAt: serverTimestamp(),
       quizId: 'studyflow-v1',
     });
-    
-    if (newDoc) {
-      setQuizResultId(newDoc.id);
-      const funnelStepRef = collection(firestore, `users/${user.uid}/quizResults/${newDoc.id}/funnelStepCompletions`);
+
+    if (newDocRef) {
+      const newId = newDocRef.id;
+      setQuizResultId(newId);
+
+      // Now use the new ID to create the subcollection reference
+      const funnelStepRef = collection(firestore, `users/${user.uid}/quizResults/${newId}/funnelStepCompletions`);
       addDocumentNonBlocking(funnelStepRef, {
         step: 'start_quiz',
         completedAt: serverTimestamp(),
       });
+      setQuizState('in-progress');
     }
-    setQuizState('in-progress');
   };
 
-  const handleQuizCompletion = (answerIndexes: number[]) => {
-    const counts: Record<string, number> = {
-      "O Disperso": 0,
-      "O Ansioso Acumulador": 0,
-      "O Exausto Mental": 0,
-      "O Travado Perfeccionista": 0,
-    };
-
-    const answerToProfileMap = [
-      ["O Disperso", "O Travado Perfeccionista", "O Disperso", "O Ansioso Acumulador"], // Q1
-      ["O Ansioso Acumulador", "O Exausto Mental", "O Disperso", "O Disperso"], // Q2
-      ["O Disperso", "O Exausto Mental", "O Ansioso Acumulador", "O Exausto Mental"], // Q3
-      ["O Ansioso Acumulador", "O Exausto Mental", "O Disperso", "O Travado Perfeccionista"], // Q4
-      ["O Travado Perfeccionista", "O Ansioso Acumulador", "O Exausto Mental", "O Ansioso Acumulador"], // Q5
-    ];
-
-    answerIndexes.forEach((answerIndex, questionIndex) => {
-      const profile = answerToProfileMap[questionIndex][answerIndex];
-      if (profile) {
-        counts[profile]++;
-      }
-    });
-
-    let maxCount = 0;
-    let finalProfileKey = "O Disperso";
-
-    for (const profile in counts) {
-      if (counts[profile] > maxCount) {
-        maxCount = counts[profile];
-        finalProfileKey = profile;
-      }
-    }
-    
+  const handleQuizCompletion = (answerIndexes: number[], finalProfileKey: string) => {
     setResultKey(finalProfileKey);
     setQuizState('analyzing');
-    trackFunnelStep('view_results_page');
+
+    if (user && quizResultId) {
+        const funnelStepRef = collection(firestore, `users/${user.uid}/quizResults/${quizResultId}/funnelStepCompletions`);
+        addDocumentNonBlocking(funnelStepRef, {
+            step: 'view_results_page',
+            completedAt: serverTimestamp(),
+        });
+    }
 
     setTimeout(() => {
         setQuizState('completed');
@@ -149,16 +119,17 @@ export default function Home() {
 
   const handleRestart = () => {
     setQuizState('idle');
+    setQuizResultId(null);
   };
 
   const renderContent = () => {
     switch (quizState) {
       case 'in-progress':
-        return <Quiz onComplete={handleQuizCompletion} trackFunnelStep={trackFunnelStep} />;
+        return <Quiz onComplete={handleQuizCompletion} quizResultId={quizResultId} />;
       case 'analyzing':
         return <AnalyzingScreen />;
       case 'completed':
-        return resultKey && <QuizResult result={resultProfiles[resultKey]} resultKey={resultKey} onRestart={handleRestart} trackFunnelStep={trackFunnelStep} />;
+        return resultKey && <QuizResult result={resultProfiles[resultKey]} resultKey={resultKey} onRestart={handleRestart} quizResultId={quizResultId} />;
       case 'idle':
       default:
         return (
@@ -188,6 +159,11 @@ export default function Home() {
                 Baseado em 42.000 diagnósticos realizados.
               </p>
             </CardContent>
+             <CardFooter className="flex-col p-4">
+              <Link href="/dashboard" className="text-xs text-muted-foreground hover:text-primary transition-colors">
+                Acessar Dashboard
+              </Link>
+            </CardFooter>
           </Card>
         );
     }

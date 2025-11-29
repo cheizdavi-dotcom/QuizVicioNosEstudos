@@ -6,18 +6,34 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { cn } from '@/lib/utils';
+import { useFirebase, addDocumentNonBlocking, useUser } from '@/firebase';
+import { collection, serverTimestamp } from 'firebase/firestore';
 
 interface QuizProps {
-  onComplete: (answerIndexes: number[]) => void;
-  trackFunnelStep: (step: string, data?: any) => void;
+  onComplete: (answerIndexes: number[], finalProfileKey: string) => void;
+  quizResultId: string | null;
 }
 
-export default function Quiz({ onComplete, trackFunnelStep }: QuizProps) {
+export default function Quiz({ onComplete, quizResultId }: QuizProps) {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answerIndexes, setAnswerIndexes] = useState<number[]>([]);
   const [progress, setProgress] = useState(0);
   const [isAnimatingOut, setIsAnimatingOut] = useState(false);
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
+
+  const { firestore, user } = useFirebase();
+
+  const trackFunnelStep = (step: string, data?: any) => {
+    if (user && quizResultId && firestore) {
+      const funnelStepRef = collection(firestore, `users/${user.uid}/quizResults/${quizResultId}/funnelStepCompletions`);
+      addDocumentNonBlocking(funnelStepRef, {
+        step,
+        ...data,
+        completedAt: serverTimestamp(),
+      });
+    }
+  };
+
 
   useEffect(() => {
     setProgress(((currentQuestionIndex) / quizQuestions.length) * 100);
@@ -29,7 +45,39 @@ export default function Quiz({ onComplete, trackFunnelStep }: QuizProps) {
         setSelectedAnswer(null); // Reset selection
         setIsAnimatingOut(false);
       } else {
-        onComplete(newAnswerIndexes);
+        // Determine final profile on completion
+        const counts: Record<string, number> = {
+          "O Disperso": 0,
+          "O Ansioso Acumulador": 0,
+          "O Exausto Mental": 0,
+          "O Travado Perfeccionista": 0,
+        };
+    
+        const answerToProfileMap = [
+          ["O Disperso", "O Travado Perfeccionista", "O Ansioso Acumulador", "O Disperso"], // Q1
+          ["O Ansioso Acumulador", "O Exausto Mental", "O Disperso", "O Disperso"], // Q2
+          ["O Ansioso Acumulador", "O Exausto Mental", "O Disperso", "O Exausto Mental"], // Q3
+          ["O Ansioso Acumulador", "O Exausto Mental", "O Disperso", "O Travado Perfeccionista"], // Q4
+          ["O Travado Perfeccionista", "O Ansioso Acumulador", "O Exausto Mental", "O Ansioso Acumulador"], // Q5
+        ];
+    
+        newAnswerIndexes.forEach((answerIndex, questionIndex) => {
+          const profile = answerToProfileMap[questionIndex][answerIndex];
+          if (profile) {
+            counts[profile]++;
+          }
+        });
+    
+        let maxCount = 0;
+        let finalProfileKey = "O Disperso";
+    
+        for (const profile in counts) {
+          if (counts[profile] > maxCount) {
+            maxCount = counts[profile];
+            finalProfileKey = profile;
+          }
+        }
+        onComplete(newAnswerIndexes, finalProfileKey);
       }
   };
 
