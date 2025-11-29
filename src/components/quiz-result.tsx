@@ -142,15 +142,15 @@ export default function QuizResult({ result, resultKey, onRestart }: QuizResultP
         </div>
 
         {/* --- PROVA SOCIAL DINÂMICA --- */}
-        <div className="bg-primary/5 p-5 rounded-xl border border-primary/20 space-y-4">
-            <h3 className="font-semibold text-base sm:text-lg text-foreground flex items-center justify-center gap-2">
+        <div className="bg-background/40 backdrop-blur-sm p-6 rounded-xl border border-primary/20 space-y-4 shadow-inner-strong">
+            <h3 className="font-semibold text-base sm:text-lg text-primary flex items-center justify-center gap-2">
                <MessageSquareQuote className="w-5 h-5 text-primary"/> O que diz quem tem esse mesmo perfil:
             </h3>
             <blockquote className="text-center">
-              <p className="text-sm sm:text-base italic text-muted-foreground leading-relaxed">
+              <p className="text-sm sm:text-base italic text-foreground/80 leading-relaxed">
                   "{testimonial.text}"
               </p>
-              <footer className="mt-4 text-xs sm:text-sm font-bold text-right text-primary/90">
+              <footer className="mt-4 text-xs sm:text-sm font-bold text-right text-primary">
                   — {testimonial.author}
               </footer>
             </blockquote>
