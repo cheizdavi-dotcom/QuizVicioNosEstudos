@@ -63,6 +63,7 @@ interface QuizResultProps {
   result: ResultProfile;
   resultKey: string;
   onRestart: () => void;
+  trackFunnelStep: (step: string, data?: any) => void;
 }
 
 const HighlightedText = ({ text }: { text: string }) => {
@@ -114,7 +115,7 @@ const resultConfig = {
   },
 };
 
-export default function QuizResult({ result, resultKey, onRestart }: QuizResultProps) {
+export default function QuizResult({ result, resultKey, onRestart, trackFunnelStep }: QuizResultProps) {
   const { title, diagnosis, ponteParaSolucao, cta } = result;
   
   const config = resultConfig[resultKey as keyof typeof resultConfig] || resultConfig["O Disperso"];
@@ -123,8 +124,9 @@ export default function QuizResult({ result, resultKey, onRestart }: QuizResultP
 
   const handleCtaClick = () => {
     fpixel.event('Lead', {
-      content_name: resultKey, // Passa o perfil do usuário como info
+      content_name: resultKey,
     });
+    trackFunnelStep('click_cta', { cta_text: cta, result_key: resultKey });
     window.open("https://www.viciadonosestudos.site/", "_blank", "noopener,noreferrer");
   };
 

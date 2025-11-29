@@ -9,9 +9,10 @@ import { cn } from '@/lib/utils';
 
 interface QuizProps {
   onComplete: (answerIndexes: number[]) => void;
+  trackFunnelStep: (step: string, data?: any) => void;
 }
 
-export default function Quiz({ onComplete }: QuizProps) {
+export default function Quiz({ onComplete, trackFunnelStep }: QuizProps) {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answerIndexes, setAnswerIndexes] = useState<number[]>([]);
   const [progress, setProgress] = useState(0);
@@ -34,6 +35,11 @@ export default function Quiz({ onComplete }: QuizProps) {
 
   const handleAnswer = (answerIndex: number) => {
     if (selectedAnswer !== null) return;
+
+    trackFunnelStep(`answer_question_${currentQuestionIndex + 1}`, {
+      question: quizQuestions[currentQuestionIndex].question,
+      answer: quizQuestions[currentQuestionIndex].options[answerIndex],
+    });
 
     setSelectedAnswer(answerIndex);
     const newAnswerIndexes = [...answerIndexes, answerIndex];

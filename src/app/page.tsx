@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Quiz from '@/components/quiz';
 import QuizResult from '@/components/quiz-result';
@@ -9,6 +9,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { BrainCircuit } from 'lucide-react';
 import AnalyzingScreen from '@/components/analyzing-screen';
 import * as fpixel from '@/lib/fpixel';
+import { useUser, useFirebase, initiateAnonymousSignIn, addDocumentNonBlocking } from '@/firebase';
+import { collection, serverTimestamp } from 'firebase/firestore';
 
 export type ResultProfile = {
   title: string;
@@ -60,10 +62,46 @@ const resultProfiles: Record<string, ResultProfile> = {
 export default function Home() {
   const [quizState, setQuizState] = useState<'idle' | 'in-progress' | 'analyzing' | 'completed'>('idle');
   const [resultKey, setResultKey] = useState<string | null>(null);
+  const [quizResultId, setQuizResultId] = useState<string | null>(null);
+  const { user, isUserLoading } = useUser();
+  const { firestore, auth } = useFirebase();
 
-  const handleStartQuiz = () => {
-    fpixel.event('InitiateCheckout'); // Evento para início do quiz
+  useEffect(() => {
+    if (!isUserLoading && !user) {
+      initiateAnonymousSignIn(auth);
+    }
+  }, [isUserLoading, user, auth]);
+
+  const trackFunnelStep = (step: string, a: any = {}) => {
+    if (user && quizResultId) {
+      const funnelStepRef = collection(firestore, `users/${user.uid}/quizResults/${quizResultId}/funnelStepCompletions`);
+      addDocumentNonBlocking(funnelStepRef, {
+        step,
+        ...a,
+        completedAt: serverTimestamp(),
+      });
+    }
+  };
+
+  const handleStartQuiz = async () => {
+    if (!user) return;
+    fpixel.event('InitiateCheckout');
     setResultKey(null);
+
+    const quizResultsRef = collection(firestore, `users/${user.uid}/quizResults`);
+    const newDoc = await addDocumentNonBlocking(quizResultsRef, {
+      startedAt: serverTimestamp(),
+      quizId: 'studyflow-v1',
+    });
+    
+    if (newDoc) {
+      setQuizResultId(newDoc.id);
+      const funnelStepRef = collection(firestore, `users/${user.uid}/quizResults/${newDoc.id}/funnelStepCompletions`);
+      addDocumentNonBlocking(funnelStepRef, {
+        step: 'start_quiz',
+        completedAt: serverTimestamp(),
+      });
+    }
     setQuizState('in-progress');
   };
 
@@ -91,7 +129,7 @@ export default function Home() {
     });
 
     let maxCount = 0;
-    let finalProfileKey = "O Disperso"; // Default profile
+    let finalProfileKey = "O Disperso";
 
     for (const profile in counts) {
       if (counts[profile] > maxCount) {
@@ -102,6 +140,7 @@ export default function Home() {
     
     setResultKey(finalProfileKey);
     setQuizState('analyzing');
+    trackFunnelStep('view_results_page');
 
     setTimeout(() => {
         setQuizState('completed');
@@ -115,11 +154,11 @@ export default function Home() {
   const renderContent = () => {
     switch (quizState) {
       case 'in-progress':
-        return <Quiz onComplete={handleQuizCompletion} />;
+        return <Quiz onComplete={handleQuizCompletion} trackFunnelStep={trackFunnelStep} />;
       case 'analyzing':
         return <AnalyzingScreen />;
       case 'completed':
-        return resultKey && <QuizResult result={resultProfiles[resultKey]} resultKey={resultKey} onRestart={handleRestart} />;
+        return resultKey && <QuizResult result={resultProfiles[resultKey]} resultKey={resultKey} onRestart={handleRestart} trackFunnelStep={trackFunnelStep} />;
       case 'idle':
       default:
         return (
@@ -142,7 +181,7 @@ export default function Home() {
               </CardDescription>
             </CardHeader>
             <CardContent className="p-6 sm:p-8 pt-0">
-              <Button size="lg" onClick={handleStartQuiz} className="w-full font-bold text-base sm:w-auto sm:px-12">
+              <Button size="lg" onClick={handleStartQuiz} className="w-full font-bold text-base sm:w-auto sm:px-12" disabled={isUserLoading || !user}>
                 Descobrir Meu Sabotador →
               </Button>
                <p className="text-xs text-muted-foreground mt-3">
