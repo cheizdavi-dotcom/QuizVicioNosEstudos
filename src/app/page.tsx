@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 import Quiz from '@/components/quiz';
 import QuizResult from '@/components/quiz-result';
 import { Button } from '@/components/ui/button';
@@ -160,11 +159,7 @@ export default function Home() {
               </p>
             </CardContent>
              <CardFooter className="flex-col p-4">
-              {process.env.NEXT_PUBLIC_SHOW_DASHBOARD === 'true' && (
-                <Link href="/dashboard" className="text-xs text-muted-foreground hover:text-primary transition-colors">
-                  Acessar Dashboard
-                </Link>
-              )}
+              {/* O link para o dashboard foi removido daqui */}
             </CardFooter>
           </Card>
         );
