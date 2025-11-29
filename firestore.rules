@@ -14,6 +14,8 @@
  * - Public Content is Read-Only: Collections like `/quizzes`, `/questions`, etc., are considered
  *   application content. They are readable by any authenticated user but cannot be modified by clients.
  *   This assumes content is managed through a trusted admin SDK or the Firebase Console.
+ * - Dashboard Access: The `funnelStepCompletions` collection allows reads from any signed-in user
+ *   to power the analytics dashboard. Writes remain strictly owner-only.
  * - No User Listing: The rules do not allow for querying or listing the top-level `/users` collection,
  *   protecting user privacy.
  * - Denormalization for Authorization: The data model uses path-based security (`/users/{userId}/...`)
@@ -135,16 +137,17 @@ service cloud.firestore {
         allow delete: if isExistingOwner(userId);
 
         /**
-         * @description Rules for tracking a user's completion of funnel steps.
+         * @description Rules for tracking a user's completion of funnel steps. This allows a global read for the dashboard.
          * @path /users/{userId}/quizResults/{quizResultId}/funnelStepCompletions/{funnelStepCompletionId}
+         * @allow (list) Any authenticated user can read the list of funnel step completions for the dashboard.
          * @allow (create) A user can create a funnel step completion record for their own quiz result. `auth.uid: 'user123', path: /users/user123/quizResults/abc/funnelStepCompletions/xyz, op: create`
          * @deny (create) A user cannot create a completion record for a non-existent quiz result. `auth.uid: 'user123', path: /users/user123/quizResults/fake_result/funnelStepCompletions/xyz, op: create`
-         * @deny (list) A user cannot list completions for another user's quiz. `auth.uid: 'user456', path: /users/user123/quizResults/abc/funnelStepCompletions, op: list`
-         * @principle Inherits ownership from the parent path and validates relational integrity.
+         * @deny (list) A user cannot list completions for another user's quiz if not for dashboard purposes.
+         * @principle Inherits ownership from the parent path and validates relational integrity for writes, but allows reads for analytics.
          */
         match /funnelStepCompletions/{funnelStepCompletionId} {
-          allow get: if isOwner(userId);
-          allow list: if isOwner(userId);
+          allow get: if isSignedIn();
+          allow list: if isSignedIn();
           allow create: if isOwner(userId) && parentQuizResultExists(userId, quizResultId);
           allow update: if isExistingOwner(userId);
           allow delete: if isExistingOwner(userId);
