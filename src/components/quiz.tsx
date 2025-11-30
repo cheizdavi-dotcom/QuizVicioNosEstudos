@@ -19,7 +19,6 @@ export default function Quiz({ onComplete, quizResultId }: QuizProps) {
   const [answerIndexes, setAnswerIndexes] = useState<number[]>([]);
   const [progress, setProgress] = useState(0);
   const [isAnimatingOut, setIsAnimatingOut] = useState(false);
-  const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
 
   const { firestore, user } = useFirebase();
 
@@ -42,7 +41,6 @@ export default function Quiz({ onComplete, quizResultId }: QuizProps) {
   const advanceToNext = (newAnswerIndexes: number[]) => {
       if (currentQuestionIndex < quizQuestions.length - 1) {
         setCurrentQuestionIndex(prevIndex => prevIndex + 1);
-        setSelectedAnswer(null); // Reset selection
         setIsAnimatingOut(false);
       } else {
         // Determine final profile on completion
@@ -82,24 +80,19 @@ export default function Quiz({ onComplete, quizResultId }: QuizProps) {
   };
 
   const handleAnswer = (answerIndex: number) => {
-    if (selectedAnswer !== null) return;
-
     trackFunnelStep(`answer_question_${currentQuestionIndex + 1}`, {
       question: quizQuestions[currentQuestionIndex].question,
       answer: quizQuestions[currentQuestionIndex].options[answerIndex],
     });
 
-    setSelectedAnswer(answerIndex);
     const newAnswerIndexes = [...answerIndexes, answerIndex];
     setAnswerIndexes(newAnswerIndexes);
     
-    // Auto-advance after a short delay
+    // Auto-advance immediately
+    setIsAnimatingOut(true);
     setTimeout(() => {
-      setIsAnimatingOut(true);
-      setTimeout(() => {
-        advanceToNext(newAnswerIndexes);
-      }, 300); // matches fade-out duration
-    }, 500); // Short delay to show selection
+      advanceToNext(newAnswerIndexes);
+    }, 300); // matches fade-out duration
   };
 
   const currentQuestion = quizQuestions[currentQuestionIndex];
@@ -115,7 +108,7 @@ export default function Quiz({ onComplete, quizResultId }: QuizProps) {
         <p className="text-sm font-medium text-primary mb-2">
           Pergunta {currentQuestionIndex + 1} de {quizQuestions.length}
         </p>
-        <CardTitle className="text-xl sm:text-2xl font-bold leading-tight">
+        <CardTitle className="text-lg sm:text-2xl font-bold leading-tight">
           {currentQuestion.question}
         </CardTitle>
       </CardHeader>
@@ -128,12 +121,9 @@ export default function Quiz({ onComplete, quizResultId }: QuizProps) {
               size="lg"
               className={cn(
                 "text-left justify-start h-auto py-4 px-4 sm:py-3 whitespace-normal text-base sm:text-sm transition-all duration-200 border-primary/20 hover:border-primary/50",
-                selectedAnswer === index
-                  ? 'bg-primary border-primary/50 text-primary-foreground'
-                  : 'bg-primary/5 hover:bg-primary/10'
+                'bg-primary/5 hover:bg-primary/10'
               )}
               onClick={() => handleAnswer(index)}
-              disabled={selectedAnswer !== null}
             >
               {option}
             </Button>
