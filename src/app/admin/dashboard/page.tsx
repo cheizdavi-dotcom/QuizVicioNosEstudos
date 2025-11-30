@@ -82,25 +82,6 @@ function FunnelDashboard() {
       return acc;
     }, {} as Record<string, Set<string>>);
     
-    // Conta quantas sessões ÚNICAS existem em cada etapa do funil.
-    // Isso é mais robusto do que a lógica anterior.
-    const stepCounts = FUNNEL_STEPS.map(step => {
-        let uniqueSessionCount = 0;
-        
-        // Itera sobre cada sessão
-        for (const sessionId in sessions) {
-            const completedSteps = sessions[sessionId];
-            if (completedSteps.has(step)) {
-                uniqueSessionCount++;
-            }
-        }
-        
-        return {
-            name: STEP_LABELS[step] || step,
-            value: uniqueSessionCount,
-        };
-    });
-
     // Agora, para criar o efeito de "funil" onde os números são cumulativos e decrescentes,
     // garantimos que uma sessão só conta para uma etapa se tiver passado por todas as anteriores.
     const cumulativeStepCounts = FUNNEL_STEPS.map((step, stepIndex) => {
@@ -109,14 +90,10 @@ function FunnelDashboard() {
       // Itera sobre cada sessão
       Object.values(sessions).forEach(completedSteps => {
           // Verifica se a sessão completou todas as etapas ATÉ a etapa atual (inclusive)
-          let passedAllPreviousSteps = true;
-          for (let i = 0; i <= stepIndex; i++) {
-              if (!completedSteps.has(FUNNEL_STEPS[i])) {
-                  passedAllPreviousSteps = false;
-                  break;
-              }
-          }
-          if (passedAllPreviousSteps) {
+          const requiredSteps = FUNNEL_STEPS.slice(0, stepIndex + 1);
+          const hasCompletedAllRequired = requiredSteps.every(requiredStep => completedSteps.has(requiredStep));
+          
+          if (hasCompletedAllRequired) {
               count++;
           }
       });
@@ -126,7 +103,6 @@ function FunnelDashboard() {
           value: count,
       };
     });
-
 
     // Filtra etapas que não têm dados para não poluir o gráfico
     return cumulativeStepCounts.filter(d => d.value > 0);
@@ -156,16 +132,16 @@ function FunnelDashboard() {
   
   return (
     <div className="p-4 sm:p-6 md:p-8">
-      <div className="flex items-center gap-4 mb-8">
-        <BrainCircuit className="w-8 h-8 text-primary" />
-        <h1 className="text-2xl sm:text-3xl font-bold text-foreground">
-          Dashboard de Análise do Funil
+      <div className="flex items-center gap-3 sm:gap-4 mb-6 sm:mb-8">
+        <BrainCircuit className="w-6 h-6 sm:w-8 sm:h-8 text-primary" />
+        <h1 className="text-xl sm:text-3xl font-bold text-foreground">
+          Análise do Funil
         </h1>
       </div>
       
       <Card className="bg-card/60 backdrop-blur-xl border-primary/20">
         <CardHeader>
-          <CardTitle>Visualização do Funil de Engajamento</CardTitle>
+          <CardTitle className="text-base sm:text-lg">Visualização do Funil de Engajamento</CardTitle>
         </CardHeader>
         <CardContent>
           {isLoading ? (
@@ -175,7 +151,7 @@ function FunnelDashboard() {
           ) : processedData.length > 0 ? (
             <FunnelChart data={processedData} />
           ) : (
-            <div className="w-full h-96 flex flex-col items-center justify-center text-center gap-4">
+            <div className="w-full h-96 flex flex-col items-center justify-center text-center gap-4 p-4">
                 <p className="text-muted-foreground">Ainda não há dados de funil para exibir.</p>
                 <Link href="/" className="text-sm text-primary hover:underline bg-primary/10 px-4 py-2 rounded-md border border-primary/20">
                     Clique aqui para fazer o quiz e gerar dados
@@ -198,7 +174,7 @@ const queryClient = new QueryClient();
 export default function DashboardPage() {
     return (
         <QueryClientProvider client={queryClient}>
-            <main className="flex min-h-screen flex-col items-center justify-center p-4 sm:p-6 futuristic-background">
+            <main className="flex min-h-screen flex-col items-center justify-center p-4 sm:p-2 futuristic-background">
                 <div className="w-full max-w-5xl">
                     <FunnelDashboard />
                 </div>

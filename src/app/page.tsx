@@ -141,17 +141,17 @@ export default function Home() {
               className="w-full h-auto object-cover"
               data-ai-hint="futuristic brain neon"
             />
-            <CardHeader className="p-6 sm:p-8">
+            <CardHeader className="p-6">
               <div className="mx-auto bg-primary/10 p-3 rounded-full mb-4 border border-primary/20 shadow-lg shadow-primary/20">
                  <BrainCircuit className="w-8 h-8 text-primary" />
               </div>
               <CardTitle className="text-2xl sm:text-3xl font-extrabold text-primary">Descubra o Padrão Cerebral Que Está Travando Seu Foco</CardTitle>
-              <CardDescription className="text-sm sm:text-base text-muted-foreground pt-2 leading-relaxed max-w-prose mx-auto">
+              <CardDescription className="text-base text-muted-foreground pt-2 leading-relaxed max-w-prose mx-auto">
                 90% das pessoas perdem o foco por padrões invisíveis no cérebro — descubra qual está segurando você em menos de 60 segundos.
               </CardDescription>
             </CardHeader>
-            <CardContent className="p-6 sm:p-8 pt-0">
-              <Button size="lg" onClick={handleStartQuiz} className="w-full font-bold text-base sm:w-auto sm:px-12" disabled={isUserLoading || !user}>
+            <CardContent className="p-6 pt-0">
+              <Button size="lg" onClick={handleStartQuiz} className="w-full font-bold text-lg sm:text-base sm:w-auto sm:px-12" disabled={isUserLoading || !user}>
                 Descobrir Meu Sabotador →
               </Button>
                <p className="text-xs text-muted-foreground mt-3">
@@ -167,7 +167,7 @@ export default function Home() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-4 sm:p-6 futuristic-background">
+    <main className="flex min-h-screen flex-col items-center justify-center p-4 futuristic-background">
       {renderContent()}
     </main>
   );

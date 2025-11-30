@@ -153,18 +153,18 @@ export default function QuizResult({ result, resultKey, onRestart, quizResultId 
         "border border-primary/30 rounded-2xl",
         "shadow-2xl shadow-primary/20"
       )}>
-      <CardHeader className="items-center text-center p-6 sm:p-10 pb-4">
-        <div className="result-icon-container filter drop-shadow-[0_0_15px_rgba(57,255,20,0.6)] animate-scale-in mb-4 sm:mb-6">
-          <ResultIcon className="w-24 h-24 sm:w-28 sm:h-28 text-primary" />
+      <CardHeader className="items-center text-center p-6 sm:p-8 pb-4">
+        <div className="result-icon-container filter drop-shadow-[0_0_15px_rgba(57,255,20,0.6)] animate-scale-in mb-4">
+          <ResultIcon className="w-20 h-20 sm:w-28 sm:h-28 text-primary" />
         </div>
-        <p className="text-sm sm:text-base text-primary font-semibold tracking-wider uppercase">Resultado encontrado!</p>
-        <h1 className="text-2xl sm:text-4xl font-extrabold mt-1 text-center text-foreground">
+        <p className="text-sm text-primary font-semibold tracking-wider uppercase">Resultado encontrado!</p>
+        <h1 className="text-2xl sm:text-3xl font-extrabold mt-1 text-center text-foreground">
          {title}
         </h1>
       </CardHeader>
-      <CardContent className="px-6 sm:px-10 space-y-8">
+      <CardContent className="px-6 sm:px-8 space-y-6">
         
-        <div className="space-y-4 text-left text-base sm:text-lg text-muted-foreground leading-relaxed">
+        <div className="space-y-4 text-left text-base text-muted-foreground leading-relaxed">
           {diagnosis.map((point, index) => (
               <p key={index}>
                   <HighlightedText text={point} />
@@ -173,27 +173,27 @@ export default function QuizResult({ result, resultKey, onRestart, quizResultId 
         </div>
 
         {/* --- PROVA SOCIAL DINÂMICA --- */}
-        <div className="bg-background/40 backdrop-blur-sm p-6 rounded-xl border border-primary/20 space-y-4 shadow-inner-strong">
-            <h3 className="font-semibold text-base sm:text-lg text-primary flex items-center justify-center gap-2 mb-6">
-               <MessageSquareQuote className="w-5 h-5 text-primary"/> O que diz quem tem esse mesmo perfil:
+        <div className="bg-background/40 backdrop-blur-sm p-4 sm:p-6 rounded-xl border border-primary/20 space-y-4 shadow-inner-strong">
+            <h3 className="font-semibold text-base text-primary flex items-center justify-center gap-2 text-center">
+               <MessageSquareQuote className="w-5 h-5 text-primary shrink-0"/> O que diz quem tem esse mesmo perfil:
             </h3>
-            <div className="flex flex-col sm:flex-row items-center gap-6 text-center sm:text-left">
+            <div className="flex flex-col items-center gap-4 text-center">
               <div className="relative shrink-0">
                 <Image 
                   src={testimonial.avatarUrl} 
                   alt={`Avatar de ${testimonial.author}`}
-                  width={100}
-                  height={100}
-                  className="rounded-full w-24 h-24 object-cover"
+                  width={80}
+                  height={80}
+                  className="rounded-full w-20 h-20 object-cover"
                   data-ai-hint="person student"
                 />
                 <div className="absolute inset-0 rounded-full border-2 border-primary ring-2 ring-primary/50 ring-offset-2 ring-offset-background/80" />
               </div>
               <blockquote className="w-full">
-                <p className="text-sm sm:text-base italic text-foreground/80 leading-relaxed">
+                <p className="text-sm italic text-foreground/80 leading-relaxed">
                     "{testimonial.text}"
                 </p>
-                <footer className="mt-4 text-xs sm:text-sm font-bold text-right text-primary">
+                <footer className="mt-3 text-xs font-bold text-right text-primary">
                     — {testimonial.author}
                 </footer>
               </blockquote>
@@ -202,16 +202,16 @@ export default function QuizResult({ result, resultKey, onRestart, quizResultId 
 
         {/* --- PONTE PARA SOLUÇÃO --- */}
         <div className="bg-primary/10 p-5 rounded-xl border-l-4 border-primary space-y-2">
-           <h3 className="font-bold text-base sm:text-lg text-foreground">A Solução Para o Seu Padrão</h3>
-           <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">
+           <h3 className="font-bold text-lg text-foreground">A Solução Para o Seu Padrão</h3>
+           <p className="text-muted-foreground text-base leading-relaxed">
             <HighlightedText text={ponteParaSolucao} />
           </p>
         </div>
 
       </CardContent>
-      <CardFooter className="flex-col gap-4 p-6 sm:p-10 pt-8">
+      <CardFooter className="flex-col gap-4 p-6 pt-8">
         <div className="w-full">
-            <Button size="lg" className="w-full h-16 text-lg font-bold group text-black bg-gradient-to-b from-primary to-[#2eb312] hover:from-primary/90 hover:to-[#28a010] transition-all duration-300 ease-in-out hover:shadow-primary/60 shadow-lg shadow-primary/40 hover:-translate-y-1 tracking-wider uppercase" onClick={handleCtaClick}>
+            <Button size="lg" className="w-full h-16 text-lg font-bold group text-black bg-gradient-to-b from-primary to-[#2eb312] hover:from-primary/90 hover:to-[#28a010] transition-all duration-300 ease-in-out hover:shadow-primary/60 shadow-lg shadow-primary/40 hover:-translate-y-1 tracking-wider uppercase">
                 {cta}
                 <MoveRight className="ml-2 transition-transform group-hover:translate-x-1" />
             </Button>

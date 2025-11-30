@@ -115,7 +115,7 @@ export default function Quiz({ onComplete, quizResultId }: QuizProps) {
         <p className="text-sm font-medium text-primary mb-2">
           Pergunta {currentQuestionIndex + 1} de {quizQuestions.length}
         </p>
-        <CardTitle className="text-lg sm:text-xl font-bold leading-tight md:text-2xl">
+        <CardTitle className="text-xl sm:text-2xl font-bold leading-tight">
           {currentQuestion.question}
         </CardTitle>
       </CardHeader>
@@ -127,7 +127,7 @@ export default function Quiz({ onComplete, quizResultId }: QuizProps) {
               variant="outline"
               size="lg"
               className={cn(
-                "text-left justify-start h-auto py-3 whitespace-normal text-sm sm:text-base transition-all duration-200 border-primary/20 hover:border-primary/50",
+                "text-left justify-start h-auto py-4 px-4 sm:py-3 whitespace-normal text-base sm:text-sm transition-all duration-200 border-primary/20 hover:border-primary/50",
                 selectedAnswer === index
                   ? 'bg-primary border-primary/50 text-primary-foreground'
                   : 'bg-primary/5 hover:bg-primary/10'
